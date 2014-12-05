@@ -11,8 +11,8 @@ module.exports = function (grunt) {
         ' */\n',
 
         clean: {
-            css: ['app/assets/css/*.css', 'app/assets/css/*.map', '!public/css/*.less'],
-            js: ['app/assets/js']
+            css: ['app/assets/css/*.css', 'app/assets/css/*.map', '!app/assets/css/*.less'],
+            js: ['app/assets/js', 'public/js']
         },
 
         less: {
