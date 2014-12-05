@@ -11,7 +11,8 @@ module.exports = function (grunt) {
         ' */\n',
 
         clean: {
-            css: ['app/assets/css/*.css', 'app/assets/css/*.map', '!app/assets/css/*.less']
+            css: ['app/assets/css/*.css', 'app/assets/css/*.map', '!public/css/*.less'],
+            js: ['app/assets/js']
         },
 
         less: {
@@ -49,7 +50,7 @@ module.exports = function (grunt) {
             },
             minifyCore: {
                 src: 'app/assets/css/bootstrap.css',
-                dest: 'app/assets/css/bootstrap.min.css'
+                dest: 'public/css/bootstrap.min.css'
             }
         },
 
@@ -59,7 +60,28 @@ module.exports = function (grunt) {
                 banner: '<%= banner %>'
             },
             files: {
-                src: 'app/assets/css/*.css'
+                src: 'public/css/*.css'
+            }
+        },
+
+        concat: {
+            options: {
+                separator: ';'
+            },
+            release: {
+                src: [
+                    'bower_components/jquery/dist/jquery.js',
+                    'bower_components/bootstrap/dist/js/bootstrap.js'
+                ],
+                dest: 'app/assets/js/webcfinder.js'
+            }
+        },
+
+        uglify: {
+            all: {
+                files: {
+                    'public/js/webcfinder.min.js': ['app/assets/js/webcfinder.js']
+                }
             }
         }
     });
@@ -70,6 +92,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
 
-    // CSS distribution task.
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    // CSS distribution task
     grunt.registerTask('dist-css', ['clean:css', 'less:compileCore', 'autoprefixer', 'usebanner', 'cssmin']);
+
+    // JS distribution task
+    grunt.registerTask('dist-js', ['clean:js', 'concat:release', 'uglify:all'])
 };
