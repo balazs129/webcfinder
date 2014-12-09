@@ -19,5 +19,11 @@
         {{ Form::closeGroup() }}
             {{ Form::submit('Submit', array('class' => 'btn btn-sm btn-primary')) }}
         {{ Form::close() }}
+
+        {{ $login_error = Session::get('login_error') }}
+        @if (isset($login_error))
+            <div class="alert alert-danger" role="alert">{{ $login_error }}</div>
+        @endif
+
 @stop
  

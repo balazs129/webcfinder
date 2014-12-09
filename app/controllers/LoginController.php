@@ -7,12 +7,27 @@ class LoginController extends BaseController {
         $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
-    public function getLogin()
+    public function showLogin()
     {
         return View::make('login.login');
     }
 
-    public function registerForm()
+    public function getLogin()
+    {
+        $user = array(
+            'email' => Input::get('email'),
+            'password' => Input::get('password')
+        );
+
+        if (Auth::attempt($user))
+        {
+            return Redirect::to('/');
+        } else {
+            return Redirect::to('login') -> with('login_error', 'Invalid login credentials.');
+        }
+    }
+
+    public function showRegistration()
     {
         return View::make('login.register');
     }
