@@ -20,8 +20,7 @@ class LoginController extends BaseController {
     public function setRegistration()
     {
         $rules = array(
-//            'email' => 'required|email|unique:users',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|same:password_confirm',
             'name' => 'required',
             'organization' => 'required'
@@ -43,7 +42,7 @@ class LoginController extends BaseController {
         if ($user->save())
         {
             Auth::loginUsingId($user->id);
-            return Redirect::to('profile');
+            return Redirect::to('/');
         }
         return Redirect::to('registration')->withInput();
     }
