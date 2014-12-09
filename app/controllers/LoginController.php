@@ -3,7 +3,6 @@
 class LoginController extends BaseController {
     public function __construct()
     {
-//        $this->beforeFilter('csrf', array('except' => array('getLogin', 'register')));
         $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
@@ -32,6 +31,11 @@ class LoginController extends BaseController {
         return View::make('login.register');
     }
 
+    public function logOut()
+    {
+        Auth::logout();
+        return Redirect::to('login');
+    }
     public function setRegistration()
     {
         $rules = array(

@@ -11,11 +11,16 @@
             <a class="navbar-brand" href="/">Webcfinder</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-left">
+
                 <li><a href="#">People</a></li>
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">Profile</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><span class="navbar-text">Signed in as {{ Auth::user()->name }} </span></li>
+                <li><a href="/logout">Log out</a></li>
             </ul>
         </div>
     </div>
