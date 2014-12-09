@@ -23,9 +23,10 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'homestead',
-			'username'  => 'homestead',
-			'password'  => 'secret',
+            'port'      => '33060',
+			'database'  => 'webcfinder',
+			'username'  => 'webcfinder',
+			'password'  => 'rpw',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
