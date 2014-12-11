@@ -1,7 +1,7 @@
 {
   "name": "webcfinder",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Web interface to the Cfinder command-line utility@Atlasz.elte.hu",
   "main": "index.js",
   "private": true,
   "scripts": {

@@ -2,7 +2,7 @@
 
 @section('sidebar-content')
 <ul class="nav nav-sidebar">
-    <li><a href="#">Upload Edgelist</a></li>
+    <li><a href="/upload">Upload Edgelist</a></li>
     <li><a href="#">Manage Edgelists</a></li>
 </ul>
 <ul class="nav nav-sidebar">

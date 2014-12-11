@@ -18,3 +18,6 @@ Route::post('register', 'LoginController@setRegistration');
 Route::get('logout', 'LoginController@logOut');
 
 Route::get('/', 'MainController@indexPage');
+Route::get('upload', 'MainController@uploadEdgeList');
+Route::post('upload', 'MainController@uploadedFile');
+
