@@ -7,7 +7,8 @@
 
 	"require": {
 		"laravel/framework": "4.2.*",
-		"manavo/laravel-bootstrap-forms": "~0.0"
+		"manavo/laravel-bootstrap-forms": "~0.0",
+		"ballen/executioner": "dev-master"
 	},
 
     "require-dev": {
@@ -40,5 +41,5 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "stable"
+	"minimum-stability": "dev"
 }

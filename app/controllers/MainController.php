@@ -33,17 +33,34 @@ class MainController extends BaseController {
         else
         {
             $edge_list -> name   = md5_file(Input::file('edgelist'));
+
+//            if (File::exists($path."/".$edge_list->name)) {
+//                return "File already uploaded";
+//            }
+
             $user -> files() -> save($edge_list);
+
+            $data = [
+                'name' => Input::file('edgelist')->getClientOriginalName(),
+                'size' => Input::file('edgelist')->getSize()
+            ];
 
             if (Input::file('edgelist') -> move($path, $edge_list->name))
             {
-                return "Success";
+
+
+                return View::make('upload-2') -> with('data', $data);
             }
             else
             {
-                return "Error";
+                return "Error while moving file";
             }
         }
     }
+
+//    public function setEdgeList()
+//    {
+//        return View::make('upload-2');
+//    }
 }
  

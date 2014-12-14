@@ -2,7 +2,7 @@
 
 class EdgeList extends Eloquent {
 
-    protected $fillable = ['name', 'user_id'];
+    protected $fillable = ['name', 'nodes', 'edges', 'description', 'user_id'];
 
     public function user()
     {

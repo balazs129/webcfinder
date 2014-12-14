@@ -20,4 +20,6 @@ Route::get('logout', 'LoginController@logOut');
 Route::get('/', 'MainController@indexPage');
 Route::get('upload', 'MainController@uploadEdgeList');
 Route::post('upload', 'MainController@uploadedFile');
+//Route::get('upload-2', 'MainController@setEdgeList');
+
 

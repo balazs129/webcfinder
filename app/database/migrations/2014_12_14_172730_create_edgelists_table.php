@@ -15,6 +15,9 @@ class CreateEdgeListsTable extends Migration {
 		Schema::create('edge_lists', function($table) {
 			$table -> increments('id');
 			$table -> string('name');
+			$table -> integer('nodes');
+			$table -> integer('edges');
+			$table -> string('description');
 			$table -> integer('user_id');
 			$table -> timestamps();
 		});
