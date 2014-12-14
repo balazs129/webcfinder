@@ -38,32 +38,25 @@ class LoginController extends BaseController {
     }
     public function setRegistration()
     {
-        $rules = array(
-            'email' => 'required|email|unique:users',
-            'password' => 'required|same:password_confirm',
-            'name' => 'required',
-            'organization' => 'required'
-        );
+        $user = new User();
+        $input = Input::all();
 
-        $validation = Validator::make(Input::all(), $rules);
-
-        if ($validation->fails())
+        $validation = $user -> validate($input);
+        if ($validation -> passes())
         {
-            return Redirect::to('register')->withErrors
-            ($validation)->withInput();
-        }
+            $user -> name           = Input::get('name');
+            $user -> email          = Input::get('email');
+            $user -> organization   = Input::get('organization');
+            $user -> password       = Hash::make(Input::get('password'));
+            $user -> admin          = 0;
 
-        $user = new User;
-        $user -> email = Input::get('email');
-        $user -> password = Hash::make(Input::get('password'));
-        $user -> name = Input::get('name');
-        $user -> admin = 0;
-        if ($user->save())
-        {
-            Auth::loginUsingId($user->id);
+            $user -> save();
+
+            Auth::loginUsingId($user -> id);
             return Redirect::to('/');
+        } else {
+            return Redirect::to('register') -> withErrors($validation) -> withInput();
         }
-        return Redirect::to('registration')->withInput();
     }
 }
  

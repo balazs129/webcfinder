@@ -18,25 +18,24 @@ class MainController extends BaseController {
 
     public function uploadedFile()
     {
-        $rules = array(
-            'edgelist' => 'mimes:txt,dat|max:1000'
-        );
+        $edge_list = new EdgeList();
+        $input = Input::all();
 
-        $validation = Validator::make(Input::all(), $rules);
+        $user = Auth::user();
+        $path = "../app/storage/files/{$user -> id}";
 
-        $file = Input::file('edgelist');
-        $name = md5_file($file);
-        $ext = $file->guessExtension();
-
+        $validation = $edge_list -> validate($input);
         if ($validation->fails())
         {
-            return Redirect::to('upload')->withErrors($validation)
+            return Redirect::to('upload') -> withErrors($validation)
                 ->withInput();
         }
         else
         {
-            $file = Input::file('edgelist');
-            if ($file->move('../app/storage/files', $name))
+            $edge_list -> name   = md5_file(Input::file('edgelist'));
+            $user -> files() -> save($edge_list);
+
+            if (Input::file('edgelist') -> move($path, $edge_list->name))
             {
                 return "Success";
             }

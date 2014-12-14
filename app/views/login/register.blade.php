@@ -10,8 +10,8 @@
             {{ Form::text('email', Input::old('email'), array('placeholder' => 'E-mail address')) }}
         {{ Form::closeGroup() }}
         {{ Form::openGroup('password') }}
-            {{ Form::password('password', array('placeholder' => 'password')) }}
-            {{ Form::password('password_confirm', array('placeholder' => 'confirm password')) }}
+            {{ Form::password('password', array('placeholder' => 'Password')) }}
+            {{ Form::password('password_confirmation', array('placeholder' => 'Confirm Password')) }}
         {{ Form::closeGroup() }}
         {{ Form::openGroup('data', 'Registration data') }}
             {{ Form::text('name', Input::old('name'), array('placeholder' => 'Name')) }}

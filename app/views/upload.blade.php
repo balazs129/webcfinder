@@ -1,8 +1,10 @@
 @extends('base')
 
-{{--@section('sidebar-content')--}}
-
-{{--@stop--}}
+@section('sidebar-content')
+<ul>
+    <li>Upload the file</li>
+</ul>
+@stop
 
 @section('content')
     <h3>Upload Edgelist</h3>

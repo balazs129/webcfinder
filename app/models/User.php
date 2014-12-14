@@ -14,8 +14,23 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'users';
+	protected $fillable = ['name' ,'email', 'password', 'organization'];
 
+	private $rules = array(
+		'email' => 'required|email|unique:users',
+		'password' => 'required|min:3|confirmed',
+		'name' => 'required',
+		'organization' => 'required'
+	);
+
+	public function validate($input) {
+		return Validator::make($input, $this->rules);
+	}
+
+	public function files()
+	{
+		return $this -> hasMany('EdgeList');
+	}
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
