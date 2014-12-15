@@ -9,7 +9,7 @@
 @section('content')
     <h3>Upload Edgelist</h3>
     {{ Form::open(array('files' => TRUE)) }}
-        {{ Form::file('edgelist') }}
+        {{ Form::file('uploaded-file') }}
         {{ Form::submit('Upload', array('class' => 'btn btn-sm btn-default')) }}
     {{ Form::close() }}
 

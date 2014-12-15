@@ -12,8 +12,10 @@
     {{ Form::open() }}
 
     {{ Form::openGroup('name', 'Name') }}
-        {{ Form::text('Name', $data['name']) }}
+        {{ Form::text('name', $edge_list->name) }}
     {{ Form::closeGroup() }}
+
+    <p>Size: {{$edge_list->size}} bytes.</p>
 
     {{ Form::openGroup('description', 'Descriprion') }}
     {{ Form::textarea('description') }}

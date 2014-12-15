@@ -11,6 +11,8 @@
 |
 */
 
+Route::pattern('id', '[0-9]+');
+
 Route::get('login', 'LoginController@showLogin');
 Route::post('login', 'LoginController@getLogin');
 Route::get('register', 'LoginController@showRegistration');
@@ -20,6 +22,7 @@ Route::get('logout', 'LoginController@logOut');
 Route::get('/', 'MainController@indexPage');
 Route::get('upload', 'MainController@uploadEdgeList');
 Route::post('upload', 'MainController@uploadedFile');
-//Route::get('upload-2', 'MainController@setEdgeList');
+Route::get('upload/{id}', 'MainController@getEdgeListAttributes');
+Route::post('upload/{id}', 'MainController@setEdgeListAttributes');
 
 

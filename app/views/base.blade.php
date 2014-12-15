@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
 
         @yield('head')
     </head>
@@ -26,7 +26,7 @@
             @yield('content')
         </div>
         </div>
-    <script src="js/webcfinder.min.js"></script>
+    <script src="/js/webcfinder.min.js"></script>
     </body>
 </html>
  

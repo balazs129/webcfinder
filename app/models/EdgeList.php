@@ -2,7 +2,7 @@
 
 class EdgeList extends Eloquent {
 
-    protected $fillable = ['name', 'nodes', 'edges', 'description', 'user_id'];
+    protected $fillable = ['file_name', 'name', 'size', 'nodes', 'edges', 'description', 'user_id'];
 
     public function user()
     {
@@ -10,11 +10,19 @@ class EdgeList extends Eloquent {
     }
 
     private $rules = array(
-        'edgelist' => 'mimes:txt,dat|max:1000'
+        'edgelist' => 'mimes:txt,dat|max:1000',
+    );
+
+    private $set_rules = array(
+        'name' => 'required|min:3'
     );
 
     public function validate($input) {
         return Validator::make($input, $this->rules);
+    }
+
+    public function validate_set($input) {
+        return Validator::make($input, $this->set_rules);
     }
 }
 

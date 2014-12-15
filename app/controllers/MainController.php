@@ -22,34 +22,28 @@ class MainController extends BaseController {
         $input = Input::all();
 
         $user = Auth::user();
-        $path = "../app/storage/files/{$user -> id}";
+        $path = "../app/storage/files/{$user->id}";
 
         $validation = $edge_list -> validate($input);
         if ($validation->fails())
         {
-            return Redirect::to('upload') -> withErrors($validation)
-                ->withInput();
+            return Redirect::to('upload')->withErrors($validation)->withInput();
         }
         else
         {
-            $edge_list -> name   = md5_file(Input::file('edgelist'));
+            $edge_list -> file_name   = md5_file(Input::file('uploaded-file'));
+            $edge_list -> name = Input::file('uploaded-file')->getClientOriginalName();
+            $edge_list -> size = Input::file('uploaded-file')->getSize();
 
-//            if (File::exists($path."/".$edge_list->name)) {
-//                return "File already uploaded";
-//            }
+            if (File::exists($path."/".$edge_list->file_name)) {
+                return "File already uploaded";
+            }
 
             $user -> files() -> save($edge_list);
 
-            $data = [
-                'name' => Input::file('edgelist')->getClientOriginalName(),
-                'size' => Input::file('edgelist')->getSize()
-            ];
-
-            if (Input::file('edgelist') -> move($path, $edge_list->name))
+            if (Input::file('uploaded-file') -> move($path, $edge_list->file_name))
             {
-
-
-                return View::make('upload-2') -> with('data', $data);
+                return Redirect::to('upload/'.$edge_list->id);
             }
             else
             {
@@ -58,9 +52,31 @@ class MainController extends BaseController {
         }
     }
 
-//    public function setEdgeList()
-//    {
-//        return View::make('upload-2');
-//    }
+    public function getEdgeListAttributes($id)
+    {
+        $edge_list = EdgeList::find($id);
+        return View::make('uploadattr')->with('edge_list', $edge_list);
+    }
+
+    public function setEdgeListAttributes($id)
+    {
+        $edge_list = EdgeList::find($id);
+        $input = Input::all();
+
+        $validation = $edge_list -> validate_set($input);
+        if ($validation->fails())
+        {
+            return Redirect::to('upload/'.$id)->withErrors($validation)->withInput();
+        }
+        else
+        {
+            $edge_list -> name          = Input::get('name');
+            $edge_list -> description   = Input::get('description');
+            $edge_list->save();
+
+            Redirect::to('/');
+        }
+
+    }
 }
  
