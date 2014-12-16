@@ -18,11 +18,15 @@ Route::post('login', 'LoginController@getLogin');
 Route::get('register', 'LoginController@showRegistration');
 Route::post('register', 'LoginController@setRegistration');
 Route::get('logout', 'LoginController@logOut');
+Route::get('reminder', 'LoginController@getReminder');
 
-Route::get('/', 'MainController@indexPage');
-Route::get('upload', 'MainController@uploadEdgeList');
-Route::post('upload', 'MainController@uploadedFile');
-Route::get('upload/{id}', 'MainController@getEdgeListAttributes');
-Route::post('upload/{id}', 'MainController@setEdgeListAttributes');
+Route::get('upload', 'EdgeController@uploadEdgeList');
+Route::post('upload', 'EdgeController@uploadedFile');
+Route::get('upload/{id}', 'EdgeController@getEdgeListAttributes');
+Route::post('upload/{id}', 'EdgeController@setEdgeListAttributes');
+Route::get('files', 'EdgeController@manageFiles');
 
-
+Route::get('/', function()
+{
+    return View::make('index');
+});

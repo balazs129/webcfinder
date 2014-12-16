@@ -31,6 +31,11 @@ class LoginController extends BaseController {
         return View::make('login.register');
     }
 
+    public function getReminder()
+    {
+        return View::make('login.reminder');
+    }
+
     public function logOut()
     {
         Auth::logout();

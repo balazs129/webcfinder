@@ -2,14 +2,19 @@
 
 @section('sidebar-content')
 <ul class="nav nav-sidebar">
-    <li><a href="/upload">Upload Edgelist</a></li>
-    <li><a href="#">Manage Edgelists</a></li>
+    <li><a href="/upload">Upload new edge list</a></li>
+    <li><a href="/files">Manage edge lists</a></li>
 </ul>
 <ul class="nav nav-sidebar">
-    <li><a href="#">Create Job</a></li>
-    <li><a href="#">Manage Jobs</a></li>
+    <li><a href="#">Create new job</a></li>
+    <li><a href="#">Manage jobs</a></li>
+    <li><a href="#">Results</a></li>
 </ul>
 <ul class="nav nav-sidebar">
-    <li><a href="#">Test Java App</a></li>
+    <li><a href="#">Example data set</a> </li>
+    <li><a href="#">Reference</a></li>
+</ul>
+<ul class="nav nav-sidebar">
+    <li><a href="#">Webstart Test</a></li>
 </ul>
 @stop

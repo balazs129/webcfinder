@@ -17,7 +17,6 @@
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Publications</a></li>
                 <li><a href="#">Feedback</a></li>
-                <li><a href="#">Example Data Set</a></li>
                 <li><a href="#">Profile</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -1,14 +1,9 @@
 <?php
 
-class MainController extends BaseController {
+class EdgeController extends BaseController {
     public function __construct()
     {
         $this->beforeFilter('auth');
-    }
-
-    public function indexPage()
-    {
-        return View::make('index');
     }
 
     public function uploadEdgeList()
@@ -36,7 +31,11 @@ class MainController extends BaseController {
             $edge_list -> size = Input::file('uploaded-file')->getSize();
 
             if (File::exists($path."/".$edge_list->file_name)) {
-                return "File already uploaded";
+                $errors = [
+                    'file exist' => 'File already exist!'
+                ];
+
+                return Redirect::to('upload')->withErrors($errors);
             }
 
             $user -> files() -> save($edge_list);
@@ -74,9 +73,16 @@ class MainController extends BaseController {
             $edge_list -> description   = Input::get('description');
             $edge_list->save();
 
-            Redirect::to('/');
+            return Redirect::to('/');
         }
 
+    }
+
+    public function manageFiles()
+    {
+        $user = Auth::user();
+        $edge_lists = EdgeList::where('user_id', '=', $user->id)->get();
+        Return View::make('manage_files')->with('files', $edge_lists);
     }
 }
  

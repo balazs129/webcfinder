@@ -8,7 +8,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"manavo/laravel-bootstrap-forms": "~0.0",
-		"ballen/executioner": "dev-master"
+		"ballen/executioner": "dev-master",
+		"barryvdh/laravel-ide-helper": "~1.11@dev"
 	},
 
     "require-dev": {
@@ -32,6 +33,7 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
+		  	"php artisan ide-helper:generate",
 			"php artisan optimize"
 		],
 		"post-create-project-cmd": [
