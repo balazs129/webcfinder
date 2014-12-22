@@ -1,10 +1,12 @@
 @extends('base')
 
+@include('sidebar')
+
 @section('content')
     <div class="page-header">
         <h3>Uploaded edge lists</h3>
     </div>
-    <table class="table table-bordered">
+    <table class="table table-condensed table-hover">
         <thead>
             <th>File name</th>
             <th>Size (byte)</th>

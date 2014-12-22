@@ -26,7 +26,7 @@ Route::get('upload/{id}', 'EdgeController@getEdgeListAttributes');
 Route::post('upload/{id}', 'EdgeController@setEdgeListAttributes');
 Route::get('files', 'EdgeController@manageFiles');
 
-Route::get('/', function()
+Route::get('/', array('before'=>'auth', function()
 {
     return View::make('index');
-});
+}));

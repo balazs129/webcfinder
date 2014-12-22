@@ -1,5 +1,7 @@
 @extends('base')
 
+@include('sidebar')
+
 @section('sidebar-content')
     <ul>
         <li>Upload the file</li>

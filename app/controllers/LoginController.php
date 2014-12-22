@@ -41,6 +41,7 @@ class LoginController extends BaseController {
         Auth::logout();
         return Redirect::to('login');
     }
+
     public function setRegistration()
     {
         $user = new User();
