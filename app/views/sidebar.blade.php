@@ -1,5 +1,3 @@
-@extends('base')
-
 @section('sidebar-content')
 <ul class="nav nav-sidebar">
     <li><a href="/upload">Upload new edge list</a></li>

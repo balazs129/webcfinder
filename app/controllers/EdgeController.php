@@ -8,7 +8,7 @@ class EdgeController extends BaseController {
 
     public function uploadEdgeList()
     {
-        return View::make('upload');
+        return View::make('edgelist.upload');
     }
 
     public function uploadedFile()
@@ -54,7 +54,7 @@ class EdgeController extends BaseController {
     public function getEdgeListAttributes($id)
     {
         $edge_list = EdgeList::find($id);
-        return View::make('uploadattr')->with('edge_list', $edge_list);
+        return View::make('edgelist.attributes')->with('edge_list', $edge_list);
     }
 
     public function setEdgeListAttributes($id)
@@ -82,7 +82,7 @@ class EdgeController extends BaseController {
     {
         $user = Auth::user();
         $edge_lists = EdgeList::where('user_id', '=', $user->id)->get();
-        Return View::make('manage_files')->with('files', $edge_lists);
+        Return View::make('edgelist.manage')->with('files', $edge_lists);
     }
 }
  
