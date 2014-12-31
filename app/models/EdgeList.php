@@ -10,7 +10,7 @@ class EdgeList extends Eloquent {
     }
 
     private $rules = array(
-        'edgelist' => 'mimes:txt,dat|max:1000',
+        'uploaded-file' => 'mimes:txt,dat|max:1000',
     );
 
     private $set_rules = array(

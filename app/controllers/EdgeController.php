@@ -42,7 +42,7 @@ class EdgeController extends BaseController {
 
             if (Input::file('uploaded-file') -> move($path, $edge_list->file_name))
             {
-                return Redirect::to('upload/'.$edge_list->id);
+                return Redirect::to('upload/edit/'.$edge_list->id);
             }
             else
             {
@@ -73,7 +73,7 @@ class EdgeController extends BaseController {
             $edge_list -> description   = Input::get('description');
             $edge_list->save();
 
-            return Redirect::to('/');
+            return Redirect::to('files');
         }
 
     }
@@ -83,6 +83,13 @@ class EdgeController extends BaseController {
         $user = Auth::user();
         $edge_lists = EdgeList::where('user_id', '=', $user->id)->get();
         Return View::make('edgelist.manage')->with('files', $edge_lists);
+    }
+
+    public function deleteEdgeList($id)
+    {
+        $edge_lists = EdgeList::find($id);
+        $edge_lists->delete();
+        return Redirect::to('files');
     }
 }
  

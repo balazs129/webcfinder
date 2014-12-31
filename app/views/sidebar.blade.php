@@ -4,7 +4,7 @@
     <li><a href="/files">Manage edge lists</a></li>
 </ul>
 <ul class="nav nav-sidebar">
-    <li><a href="#">Create new job</a></li>
+    <li><a href="/job/new">Create new job</a></li>
     <li><a href="#">Manage jobs</a></li>
     <li><a href="#">Results</a></li>
 </ul>

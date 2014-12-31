@@ -21,10 +21,13 @@
         <p class="text-muted">Size: {{$edge_list->size}} bytes.</p>
 
         {{ Form::openGroup('description', 'Descriprion') }}
-            {{ Form::textarea('description') }}
+            {{ Form::textarea('description', $edge_list->description, array('rows'=>'4')) }}
         {{ Form::closeGroup() }}
 
-        {{ Form::submit('Save', array('class' => 'btn btn-sm btn-default')) }}
+    <div class="form-actions">
+        <button type="submit" class="btn btn-sm btn-primary">Save changes</button>
+        <a class="btn btn-default btn-sm" href="/files">Cancel</a>
+    </div>
     {{ Form::close() }}
 @stop
 

@@ -5,27 +5,33 @@
 @stop
 
 @section('content')
-    <h2>Webcfinder Login</h2>
+    <div class="page-header text-center">
+        <h3>Webcfinder <small>login</small></h3>
+    </div>
         {{ Form::open() }}
             {{ Form::openGroup('login-email', '') }}
-            {{ Form::text('email', '', array('id' => 'email', 'placeholder' => 'Email address')) }}
+            {{ Form::text('email', '', array('class' => 'input-sm', 'placeholder' => 'Email address')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('login-password', '') }}
-            {{ Form::password('password', array('placeholder' => 'password')) }}
+            {{ Form::password('password', array('class'=>'input-sm', 'placeholder' => 'password')) }}
             {{ Form::closeGroup() }}
         {{ Form::openGroup('links') }}
-            <ul class="login-links">
+            <ul class="text-center list-inline">
                 <li> <a href="/register">Register</a></li>
                 <li> <a href="/reminder">Forgotten Password</a></li>
             </ul>
         {{ Form::closeGroup() }}
-            {{ Form::submit('Login', array('class' => 'btn btn-sm btn-primary')) }}
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                {{ Form::submit('Login', array('class' => 'btn btn-sm btn-block btn-success')) }}
+                </div>
+            </div>
         {{ Form::close() }}
 
-        {{ $login_error = Session::get('login_error') }}
-        @if (isset($login_error))
-            <div class="alert alert-danger" role="alert">{{ $login_error }}</div>
+        @if (Session::get('login_error'))
+            <div class="alert alert-warning" role="alert">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                {{ Session::get('login_error') }}</div>
         @endif
-
 @stop
  

@@ -13,6 +13,7 @@
 
 Route::pattern('id', '[0-9]+');
 
+// Login routes
 Route::get('login', 'LoginController@showLogin');
 Route::post('login', 'LoginController@getLogin');
 Route::get('register', 'LoginController@showRegistration');
@@ -20,12 +21,18 @@ Route::post('register', 'LoginController@setRegistration');
 Route::get('logout', 'LoginController@logOut');
 Route::get('reminder', 'LoginController@getReminder');
 
+// Edge list routes
 Route::get('upload', 'EdgeController@uploadEdgeList');
 Route::post('upload', 'EdgeController@uploadedFile');
-Route::get('upload/{id}', 'EdgeController@getEdgeListAttributes');
-Route::post('upload/{id}', 'EdgeController@setEdgeListAttributes');
+Route::get('upload/edit/{id}', 'EdgeController@getEdgeListAttributes');
+Route::post('upload/edit/{id}', 'EdgeController@setEdgeListAttributes');
+Route::get('upload/delete/{id}', 'EdgeController@deleteEdgeList');
 Route::get('files', 'EdgeController@manageFiles');
 
+// Job routes
+Route::get('/job/new', 'JobController@createJob');
+
+// Index page
 Route::get('/', array('before'=>'auth', function()
 {
     return View::make('index');

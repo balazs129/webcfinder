@@ -25,11 +25,11 @@
                 <td>{{ $file->created_at }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                    <a class="btn text-success" href="/upload/{{ $file->id }}">
+                    <a class="btn text-success" href="/upload/edit/{{ $file->id }}">
                         <span class="glyphicon glyphicon-pencil"></span>
                         Edit
                     </a>
-                    <a class="btn text-danger" href="#">
+                    <a class="btn text-danger" href="/upload/delete/{{ $file->id }}">
                         <span class="glyphicon glyphicon-remove"></span>
                         Delete
                     </a>
