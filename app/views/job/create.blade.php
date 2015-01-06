@@ -10,7 +10,7 @@
         <div class="col-sm-4">
         {{ Form::open() }}
             {{ Form::openGroup('file-select', '') }}
-                {{ Form::select('edge-list', array('egy'=>'ketto', 'harom'=>'negy')) }}
+                {{ Form::select('edge-list', $edge_lists) }}
             {{ Form::closeGroup() }}
         </div>
 
