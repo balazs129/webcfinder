@@ -31,6 +31,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this -> hasMany('EdgeList');
 	}
+
+	public function jobs()
+	{
+		return $this->hasMany('Job');
+	}
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

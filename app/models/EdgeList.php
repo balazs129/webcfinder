@@ -6,7 +6,7 @@ class EdgeList extends Eloquent {
 
     public function user()
     {
-        $this -> belongsTo('User');
+        $this->belongsTo('User');
     }
 
     private $rules = array(
