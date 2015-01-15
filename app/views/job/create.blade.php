@@ -31,7 +31,7 @@
                 {{ Form::text('lower_weight', '', array('class'=>'input-sm', 'placeholder'=>'Lower')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('weight-threshold', 'Number of digits') }}
-                {{ Form::number('threshold_digits', 0, array('class'=>'input-sm')) }}
+                {{ Form::number('digits', '', array('class'=>'input-sm')) }}
             {{ Form::closeGroup() }}
         </div>
 
@@ -40,16 +40,16 @@
                 {{ Form::text('max_time', '', array('class'=>'input-sm', 'placeholder'=>'Maximal allowed time per node')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('other-threshold', '') }}
-                {{ Form::text('weight_intensity', '', array('class'=>'input-sm', 'placeholder'=>'Lower link weight intensity threshold')) }}
+                {{ Form::text('lower_link', '', array('class'=>'input-sm', 'placeholder'=>'Lower link weight intensity threshold')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('other-threshold', '') }}
-                {{ Form::checkbox('directed_cliques','','Directed cliques') }}
+                {{ Form::checkbox('directed','','Directed cliques') }}
             {{ Form::closeGroup() }}
         </div>
 
         <div class="col-sm-3 col-sm-offset-1">
             {{ Form::openGroup('k-size', 'k-clique size') }}
-                {{ Form::number('k_size', 0, array('class'=>'input-sm')) }}
+                {{ Form::number('k_size', '', array('class'=>'input-sm')) }}
             {{ Form::closeGroup() }}
         </div>
     </div>

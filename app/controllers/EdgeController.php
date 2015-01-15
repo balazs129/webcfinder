@@ -26,9 +26,9 @@ class EdgeController extends BaseController {
         }
         else
         {
-            $edge_list -> file_name   = md5_file(Input::file('uploaded-file'));
-            $edge_list -> name = Input::file('uploaded-file')->getClientOriginalName();
-            $edge_list -> size = Input::file('uploaded-file')->getSize();
+            $edge_list->file_name   = md5_file(Input::file('uploaded-file'));
+            $edge_list->name = Input::file('uploaded-file')->getClientOriginalName();
+            $edge_list->size = Input::file('uploaded-file')->getSize();
 
             if (File::exists($path."/".$edge_list->file_name)) {
                 $errors = [

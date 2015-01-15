@@ -50,15 +50,15 @@ class LoginController extends BaseController {
         $validation = $user -> validate($input);
         if ($validation -> passes())
         {
-            $user -> name           = Input::get('name');
-            $user -> email          = Input::get('email');
-            $user -> organization   = Input::get('organization');
-            $user -> password       = Hash::make(Input::get('password'));
-            $user -> admin          = 0;
+            $user->name           = Input::get('name');
+            $user->email          = Input::get('email');
+            $user->organization   = Input::get('organization');
+            $user->password       = Hash::make(Input::get('password'));
+            $user->admin          = 0;
 
-            $user -> save();
+            $user->save();
 
-            Auth::loginUsingId($user -> id);
+            Auth::loginUsingId($user->id);
             return Redirect::to('/');
         } else {
             return Redirect::to('register') -> withErrors($validation) -> withInput();

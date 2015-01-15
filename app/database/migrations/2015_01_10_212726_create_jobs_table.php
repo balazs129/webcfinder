@@ -16,8 +16,17 @@ class CreateJobsTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->integer('edge_list_id');
-			$table->string('upper_weight_threshold');
-			$table->string('lower_weight_threshold');
+			$table->integer('result_id');
+			$table->integer('slurm_id');
+			$table->integer('upper_weight')->nullable();
+			$table->integer('lower_weight')->nullable();
+			$table->integer('digits')->nullable();
+			$table->integer('max_time')->nullable();
+			$table->boolean('directed')->nullable();
+			$table->integer('lower_link')->nullable();
+			$table->integer('k_size')->nullable();
+			$table->string('status');
+			$table->timestamps();
 		});
 	}
 
