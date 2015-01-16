@@ -27,13 +27,13 @@ class JobController extends BaseController
 
     private function generateJobFile($user, $cmd_options, $edge_list, $job_id)
     {
-        $base_path = "../app/storage/files/{$user->id}";
+        $base_path = storage_path() . "/files/{$user->id}";
         $new_path = $base_path . "/{$job_id}";
 
-        $file_content = <<<EOF
+        $file_content = "
 #!/bin/bash
-CFinder_commandline64 $cmd_options;
-EOF;
+/afs/elte.hu/user/b/balazs129/home/webcfinder/CFinder_commandline64 "
+. "-l /afs/elte.hu/user/b/balazs129/home/webcfinder/licence.txt $cmd_options ";
 
         if (File::isDirectory($base_path . '/' . $job_id)) {
             File::cleanDirectory($base_path . '/'. $job_id);
@@ -41,17 +41,19 @@ EOF;
             File::makeDirectory($base_path . '/' . $job_id, $mode = 0777);
         }
 
-        $file_path = $new_path . '/slurm_job';
+        $file_path = $new_path . '/slurm_job.sh';
         $job_file = fopen($file_path, 'w');
         File::put($file_path, $file_content);
         fclose($job_file);
         File::copy($base_path . '/' . $edge_list, $new_path . '/' . $edge_list);
 
         // Create tarball for upload
-        $real_path = realpath($file_path);
-        $dest_dir = realpath($new_path);
-        $process = new Process("tar -czf $dest_dir/slurm_job.tar.gz  $real_path" );
+        $tar_command = "tar -czf $new_path/slurm_job.tar.gz -C $new_path slurm_job.sh $edge_list";
+        $process = new Process($tar_command);
         $process->run();
+
+//        return $process->isSuccessful();
+        return $new_path . '/slurm_job.tar.gz';
     }
 
     public function submitJob()
@@ -63,6 +65,8 @@ EOF;
         $validation = $job->validate($input);
 
         if ($validation->passes()) {
+            $remote = SSH::into('Caesar');
+
             $edge_list = EdgeList::where('name', '=', Input::get('edge_list'))->first();
             //TODO: Check for unique job
             $job->user_id = $user->id;
@@ -76,10 +80,25 @@ EOF;
             $job->k_size = Input::get('k_size');
             $job->save();
 
-            $cmd_options = $job->generateOptions($input);
+            $cmd_options = $job->generateOptions($edge_list->file_name, $input);
             // Generate the job file
-            $this->generateJobFile($user, $cmd_options, $edge_list->file_name, $job->id);
+            $local_file = $this->generateJobFile($user, $cmd_options, $edge_list->file_name, $job->id);
 
+            // Upload File
+            $remote->run(array(
+                "cd webcfinder/$user->id",
+                "mkdir $job->id",
+            ));
+
+            $remote->put($local_file, "webcfinder/$user->id/$job->id/slurm_job.tar.gz" );
+
+            $remote->run(array(
+                "cd webcfinder/$user->id/$job->id",
+                "tar -xzf slurm_job.tar.gz",
+                "chmod +x slurm_job.sh",
+                "./slurm_job.sh"
+            ));
+            $data = 'OK';
             return View::make('job.test')->with('data', $data);
         }
     }

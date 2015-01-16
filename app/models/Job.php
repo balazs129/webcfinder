@@ -16,9 +16,9 @@ class Job extends Eloquent {
         return Validator::make($input, $this->rules);
     }
 
-    public function generateOptions($input)
+    public function generateOptions($edge_list, $input)
     {
-        $options = " -i {$input['edge_list']}";
+        $options = "-i $edge_list";
 
         if (!empty($input['upper_weight'])) {
             $options .= " -W {$input['upper_weight']}";
@@ -39,7 +39,6 @@ class Job extends Eloquent {
         if (!empty($input['weight_intensity'])) {
             $options .= " -I {$input['weight_intensity']}";
         }
-
 
         if (!empty($input['k_size'])) {
             $options .= " -k {$input['k_size']}";

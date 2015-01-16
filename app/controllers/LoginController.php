@@ -59,6 +59,13 @@ class LoginController extends BaseController {
             $user->save();
 
             Auth::loginUsingId($user->id);
+
+            // Create folder in the remote connection
+            SSH::into('Caesar')->run(array(
+                'cd webcfinder',
+                "mkdir $user->id",
+            ));
+
             return Redirect::to('/');
         } else {
             return Redirect::to('register') -> withErrors($validation) -> withInput();
