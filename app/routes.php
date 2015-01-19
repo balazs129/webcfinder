@@ -32,7 +32,8 @@ Route::get('files', 'EdgeController@manageFiles');
 // Job routes
 Route::get('/job/new', 'JobController@createJob');
 Route::post('/job/new', 'JobController@submitJob');
-
+Route::get('/job/update', 'JobController@getUpdateJobs');
+Route::post('/job/update', 'JobController@updateJobs');
 // Index page
 Route::get('/', array('before'=>'auth', function()
 {

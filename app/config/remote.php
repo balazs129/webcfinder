@@ -34,7 +34,7 @@ return array(
 			'password'  => 'password17',
 			'key'       => '',
 			'keyphrase' => '',
-			'root'      => '/afs/elte.hu/user/b/balazs129/home',
+			'root'      => '',
 		),
 
 	),

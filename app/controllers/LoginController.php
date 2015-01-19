@@ -60,6 +60,14 @@ class LoginController extends BaseController {
 
             Auth::loginUsingId($user->id);
 
+            // Create local folder structure
+            $base_path = storage_path() . '/files';
+            $user_dir = $base_path . "/$user->id";
+            $results_dir = $user_dir . "/results";
+
+            File::makeDirectory($user_dir);
+            File::makeDirectory($results_dir);
+
             // Create folder in the remote connection
             SSH::into('Caesar')->run(array(
                 'cd webcfinder',

@@ -78,13 +78,14 @@ class JobController extends BaseController
             $job->directed = Input::get('directed');
             $job->lower_link = Input::get('lower_link');
             $job->k_size = Input::get('k_size');
+            $job->status = "PENDING";
             $job->save();
 
             $cmd_options = $job->generateOptions($edge_list->file_name, $input);
             // Generate the job file
             $local_file = $this->generateJobFile($user, $cmd_options, $edge_list->file_name, $job->id);
 
-            // Upload File
+            // Upload and run the job file
             $remote->run(array(
                 "cd webcfinder/$user->id",
                 "mkdir $job->id",
@@ -98,9 +99,66 @@ class JobController extends BaseController
                 "chmod +x slurm_job.sh",
                 "./slurm_job.sh"
             ));
-            $data = 'OK';
+
+            // Delete the local job dir
+            $working_dir = storage_path() . "/files/$user->id" . "/$job->id";
+            if (File::isDirectory($working_dir)) {
+                File::deleteDirectory($working_dir);
+            }
+                $data = $local_file;
             return View::make('job.test')->with('data', $data);
         }
+    }
+
+    public function getUpdateJobs()
+    {
+        $user_id = Auth::getUser()->id;
+        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'PENDING')->count();
+
+        return View::make('job.update')->with('pending_jobs', $pending_jobs);
+    }
+
+    public function updateJobs()
+    {
+        $user_id = Auth::getUser()->id;
+        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'PENDING')->get();
+        $remote = SSH::into('Caesar');
+
+        foreach ($pending_jobs as $job){
+            $job_id = $job->id;
+
+            //TODO: Check if the job finished
+            // Tar the result directory
+            $ret_val = '';
+            $remote->run(array(
+                "cd webcfinder/$user_id/$job_id",
+                "if [ ! -d result_files ]; then mv *_files result_files; fi",
+                "if [ ! -f result.tar.gz ]; then tar czf result.tar.gz result_files/; fi",
+                "if [ -f result.tar.gz ]; then echo -n 'OK'; fi"
+            ), function($line) use(&$ret_val) {
+                $ret_val = $line;
+            });
+
+            if ($ret_val == "OK") {
+                $remote_path = "webcfinder/$user_id/$job_id/result.tar.gz";
+                $local_path = storage_path() . "/files/$user_id/results/job_$job_id.tar.gz";
+                $remote->get($remote_path, $local_path);
+            }
+
+            // If we got the result file
+            if (File::exists($local_path)) {
+                // Delete remote directory
+                $remote->run(array(
+                    "cd webcfinder/$user_id",
+                    "if [ -d $job_id ]; then rm -fr $job_id; fi"
+                ));
+                // Update the job record
+                $job->status = "FINISHED";
+                $job->save();
+            }
+        };
+
+        return View::make('job.test')->With('data', $ret_val);
     }
 }
 
