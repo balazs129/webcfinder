@@ -160,5 +160,41 @@ class JobController extends BaseController
 
         return View::make('job.test')->With('data', $ret_val);
     }
+
+    private function getCfinderOptions($job)
+    {
+        $options = "Default";
+
+        if (! is_null($job->upper_weight)) {
+            $options . "Upper weight: $job->upper_weight";
+        }
+
+        if (! is_null($job->lower_weight)) {
+            $options . " Lower weight: $job->lower_weight";
+        }
+
+        return "Upper Weight: 5, Lower Weight: 1, Digits: 4, Max time per node: 1780, Directed, Lower link intensity: 8, k_size: 4";
+//        return "Default";
+    }
+
+    public function manageJobs()
+    {
+        $user = Auth::getUser();
+        $jobs = Job::where('user_id', '=', $user->id)->get();
+
+        $jobs->each(function($job){
+          $job->edge_list = EdgeList::find($job->edge_list_id)->name;
+          $job->cfinder_options = $this->getCfinderOptions($job);
+        });
+
+        return View::make('job.manage')->with('jobs', $jobs);
+    }
+
+    public function downloadResult($id)
+    {
+        $user_id = Auth::getUser()->id;
+        $file = storage_path() . "/files/$user_id/results/job_$id.tar.gz";
+        return Response::download($file,'result.tar.gz', ['content-type' => 'application/x-gtar']);
+    }
 }
 

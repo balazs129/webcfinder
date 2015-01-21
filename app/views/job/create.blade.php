@@ -24,32 +24,32 @@
     </div>
     <div class="row">
         <div class="col-sm-3">
-            {{ Form::openGroup('weight-threshold', 'Weight Threshold') }}
-                {{ Form::text('upper_weight', '', array('class'=>'input-sm', 'placeholder'=>'Upper')) }}
+            {{ Form::openGroup('weight-threshold', 'Upper weight threshold') }}
+                {{ Form::text('upper_weight', null, array('class'=>'input-sm', 'placeholder'=>'Upper weight threshold')) }}
             {{ Form::closeGroup() }}
-            {{ Form::openGroup('other-threshold', '') }}
-                {{ Form::text('lower_weight', '', array('class'=>'input-sm', 'placeholder'=>'Lower')) }}
+            {{ Form::openGroup('other-threshold', 'Lower weight threshold') }}
+                {{ Form::text('lower_weight', null, array('class'=>'input-sm', 'placeholder'=>'Lower weight threshold')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('weight-threshold', 'Number of digits') }}
-                {{ Form::number('digits', '', array('class'=>'input-sm')) }}
+                {{ Form::number('digits', null, array('class'=>'input-sm')) }}
             {{ Form::closeGroup() }}
         </div>
 
         <div class="col-sm-3 col-sm-offset-1">
             {{ Form::openGroup('other-threshold', 'Other options') }}
-                {{ Form::text('max_time', '', array('class'=>'input-sm', 'placeholder'=>'Maximal allowed time per node')) }}
+                {{ Form::text('max_time', null, array('class'=>'input-sm', 'placeholder'=>'Maximal allowed time per node')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('other-threshold', '') }}
-                {{ Form::text('lower_link', '', array('class'=>'input-sm', 'placeholder'=>'Lower link weight intensity threshold')) }}
+                {{ Form::text('lower_link', null, array('class'=>'input-sm', 'placeholder'=>'Lower link weight intensity threshold')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('other-threshold', '') }}
-                {{ Form::checkbox('directed','','Directed cliques') }}
+                {{ Form::checkbox('directed', null,'Directed cliques') }}
             {{ Form::closeGroup() }}
         </div>
 
         <div class="col-sm-3 col-sm-offset-1">
             {{ Form::openGroup('k-size', 'k-clique size') }}
-                {{ Form::number('k_size', '', array('class'=>'input-sm')) }}
+                {{ Form::number('k_size', null, array('class'=>'input-sm')) }}
             {{ Form::closeGroup() }}
         </div>
     </div>

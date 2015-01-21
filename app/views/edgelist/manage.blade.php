@@ -23,7 +23,7 @@
                 <td>{{ $file->nodes }}</td>
                 <td>{{ $file->edges }}</td>
                 <td>{{ $file->created_at }}</td>
-                <td>
+                <td class="col-md-2">
                     <div class="btn-group" role="group">
                     <a class="btn text-success" href="/upload/edit/{{ $file->id }}">
                         <span class="glyphicon glyphicon-pencil"></span>

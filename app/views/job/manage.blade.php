@@ -1,0 +1,49 @@
+@extends('base')
+
+@include('sidebar')
+
+@section('content')
+    <div class="page-header">
+        <h3>Jobs</h3>
+    </div>
+    <table class="table table-condensed table-hover">
+        <thead>
+        <th class="col-md-2">Edge List</th>
+        <th class="text-center col-md-4">Cfinder options</th>
+        <th class="text-center col-md-1">Status</th>
+        <th class="text-center col-md-3">Created at</th>
+        <th class="col-md-2">Options</th>
+        </thead>
+        <tbody>
+        @foreach($jobs as $job)
+            <tr>
+                <td>{{ $job->edge_list}}</td>
+                <td class="text-center text-muted">{{ $job->cfinder_options }}</td>
+                @if ($job->status == "FINISHED")
+                   <td class="text-center text-success">Finished</td>
+                @elseif ($job->status == "PENDING")
+                    <td class="text-center text-info">Running</td>
+                @endif
+                <td class="text-muted text-center">{{ $job->created_at }}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        @if ($job->status == 'FINISHED')
+                        <a class="btn text-success" href="/job/download/{{ $job->id }}">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            Download
+                        </a>
+                        <a class="btn text-danger" href="/job/delete/{{ $job->id }}">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Delete
+                        </a>
+                    @elseif ($job->status == 'PENDING')
+                    <a class="btn text-warning" href="/job/cancel/{{ $job->id }}">
+                        <span class="glyphicon glyphicon-remove"></span>Cancel Job</a>
+                    @endif
+                    </div>
+                </td>
+            <tr>
+        @endforeach
+        </tbody>
+    </table>
+@stop

@@ -34,6 +34,10 @@ Route::get('/job/new', 'JobController@createJob');
 Route::post('/job/new', 'JobController@submitJob');
 Route::get('/job/update', 'JobController@getUpdateJobs');
 Route::post('/job/update', 'JobController@updateJobs');
+Route::get('/job/manage', 'JobController@manageJobs');
+Route::get('/job/download/{id}', 'JobController@downloadResult');
+Route::get('/job/cancel/{id}', 'JobController@cancelJob');
+
 // Index page
 Route::get('/', array('before'=>'auth', function()
 {
