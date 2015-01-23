@@ -9,20 +9,12 @@ class JobController extends BaseController
         $this->beforeFilter('auth');
     }
 
-    public function createJob()
+    public function create()
     {
         $user = Auth::getUser();
-        $edge_lists = EdgeList::where('user_id', '=', $user->id)->get()->toArray();
+        $edge_lists = EdgeList::where('user_id', '=', $user->id)->get(array('name'))->toArray();
 
-        $edge_lists_names = array_fetch($edge_lists, 'name');
-        $data = array();
-
-        // Create associative array for the select, or we only get the index of the selected value.
-        foreach ($edge_lists_names as $name) {
-            $data[$name] = $name;
-        }
-
-        return View::make('job.create')->with('edge_lists', $data);
+        return View::make('job.create')->with('edge_lists', array_flatten($edge_lists));
     }
 
     private function generateJobFile($user, $cmd_options, $edge_list, $job_id)
@@ -56,7 +48,7 @@ class JobController extends BaseController
         return $new_path . '/slurm_job.tar.gz';
     }
 
-    public function submitJob()
+    public function submit()
     {
         $job = new Job();
         $input = Input::all();
@@ -110,7 +102,7 @@ class JobController extends BaseController
         }
     }
 
-    public function getUpdateJobs()
+    public function getUpdate()
     {
         $user_id = Auth::getUser()->id;
         $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'PENDING')->count();
@@ -118,44 +110,13 @@ class JobController extends BaseController
         return View::make('job.update')->with('pending_jobs', $pending_jobs);
     }
 
-    public function updateJobs()
+    public function update()
     {
         $user_id = Auth::getUser()->id;
         $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'PENDING')->get();
-        $remote = SSH::into('Caesar');
 
         foreach ($pending_jobs as $job){
-            $job_id = $job->id;
-
-            //TODO: Check if the job finished
-            // Tar the result directory
-            $ret_val = '';
-            $remote->run(array(
-                "cd webcfinder/$user_id/$job_id",
-                "if [ ! -d result_files ]; then mv *_files result_files; fi",
-                "if [ ! -f result.tar.gz ]; then tar czf result.tar.gz result_files/; fi",
-                "if [ -f result.tar.gz ]; then echo -n 'OK'; fi"
-            ), function($line) use(&$ret_val) {
-                $ret_val = $line;
-            });
-
-            if ($ret_val == "OK") {
-                $remote_path = "webcfinder/$user_id/$job_id/result.tar.gz";
-                $local_path = storage_path() . "/files/$user_id/results/job_$job_id.tar.gz";
-                $remote->get($remote_path, $local_path);
-            }
-
-            // If we got the result file
-            if (File::exists($local_path)) {
-                // Delete remote directory
-                $remote->run(array(
-                    "cd webcfinder/$user_id",
-                    "if [ -d $job_id ]; then rm -fr $job_id; fi"
-                ));
-                // Update the job record
-                $job->status = "FINISHED";
-                $job->save();
-            }
+            Queue::push('UpdateJob', array('user_id'=>$user_id, 'job_id'=>$job->id));
         };
 
         return View::make('job.test')->With('data', $ret_val);
@@ -177,7 +138,7 @@ class JobController extends BaseController
 //        return "Default";
     }
 
-    public function manageJobs()
+    public function manage()
     {
         $user = Auth::getUser();
         $jobs = Job::where('user_id', '=', $user->id)->get();
@@ -195,6 +156,30 @@ class JobController extends BaseController
         $user_id = Auth::getUser()->id;
         $file = storage_path() . "/files/$user_id/results/job_$id.tar.gz";
         return Response::download($file,'result.tar.gz', ['content-type' => 'application/x-gtar']);
+    }
+
+    public function cancel($id)
+    {
+        $user_id = Auth::getUser()->id;
+        // Delete local dir if exists
+        $dir = storage_path() . "/files/$user_id/$id";
+        if (File::isDirectory($dir)) {
+            File::cleanDirectory($dir);
+            File::deleteDirectory($dir);
+        };
+
+        // Remove from database
+        Job::find($id)->delete();
+
+        // Cancel & delete remote job
+        Queue::push('CancelJob', array('user_id'=>$user_id, 'job_id'=>$id));
+        return Redirect::to('/job/manage');
+    }
+
+    public function delete($id)
+    {
+        $user_id = Auth::getUser()->id;
+
     }
 }
 

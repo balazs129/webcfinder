@@ -13,6 +13,7 @@
                 {{ Form::select('edge_list', $edge_lists) }}
             {{ Form::closeGroup() }}
         </div>
+        {{ var_dump($edge_lists) }}
         <div class="col-sm-4 col-sm-offset-2">
             <p>Select the edge list you want to process.</p>
         </div>

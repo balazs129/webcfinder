@@ -30,13 +30,14 @@ Route::get('upload/delete/{id}', 'EdgeController@deleteEdgeList');
 Route::get('files', 'EdgeController@manageFiles');
 
 // Job routes
-Route::get('/job/new', 'JobController@createJob');
-Route::post('/job/new', 'JobController@submitJob');
-Route::get('/job/update', 'JobController@getUpdateJobs');
-Route::post('/job/update', 'JobController@updateJobs');
-Route::get('/job/manage', 'JobController@manageJobs');
+Route::get('/job/new', 'JobController@create');
+Route::post('/job/new', 'JobController@submit');
+Route::get('/job/update', 'JobController@getUpdate');
+Route::post('/job/update', 'JobController@update');
+Route::get('/job/manage', 'JobController@manage');
 Route::get('/job/download/{id}', 'JobController@downloadResult');
-Route::get('/job/cancel/{id}', 'JobController@cancelJob');
+Route::get('/job/cancel/{id}', 'JobController@cancel');
+Route::get('/job/delete/{id}', 'JobController@delete');
 
 // Index page
 Route::get('/', array('before'=>'auth', function()

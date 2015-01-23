@@ -8,8 +8,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"manavo/laravel-bootstrap-forms": "~0.0",
-		"ballen/executioner": "dev-master",
-		"barryvdh/laravel-ide-helper": "~1.11@dev"
+		"barryvdh/laravel-ide-helper": "~1.11@dev",
+		"pda/pheanstalk": "2.0.*"
 	},
 
     "require-dev": {
