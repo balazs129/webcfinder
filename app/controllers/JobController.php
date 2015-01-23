@@ -14,23 +14,28 @@ class JobController extends BaseController
         $user = Auth::getUser();
         $edge_lists = EdgeList::where('user_id', '=', $user->id)->get(array('name'))->toArray();
 
-        return View::make('job.create')->with('edge_lists', array_flatten($edge_lists));
+        // Create an associative array fo select
+        $select_options = array();
+        foreach (array_flatten($edge_lists) as $edge_list) {
+            $select_options[$edge_list] = $edge_list;
+        }
+
+        return View::make('job.create')->with('edge_lists', $select_options);
     }
 
-    private function generateJobFile($user, $cmd_options, $edge_list, $job_id)
+    private function generateJobFile($user_id, $cmd_options, $edge_list, $job_id)
     {
-        $base_path = storage_path() . "/files/{$user->id}";
+        $base_path = storage_path() . "/files/{$user_id}";
         $new_path = $base_path . "/{$job_id}";
 
-        $file_content = "
-#!/bin/bash
-/afs/elte.hu/user/b/balazs129/home/webcfinder/CFinder_commandline64 "
-. "-l /afs/elte.hu/user/b/balazs129/home/webcfinder/licence.txt $cmd_options ";
+        $file_content = "#!/bin/bash\n"
+                      . "/afs/elte.hu/user/b/balazs129/home/webcfinder/CFinder_commandline64 "
+                      . "-l /afs/elte.hu/user/b/balazs129/home/webcfinder/licence.txt $cmd_options ";
 
         if (File::isDirectory($base_path . '/' . $job_id)) {
             File::cleanDirectory($base_path . '/'. $job_id);
         } else {
-            File::makeDirectory($base_path . '/' . $job_id, $mode = 0777);
+            File::makeDirectory($base_path . '/' . $job_id);
         }
 
         $file_path = $new_path . '/slurm_job.sh';
@@ -44,7 +49,6 @@ class JobController extends BaseController
         $process = new Process($tar_command);
         $process->run();
 
-//        return $process->isSuccessful();
         return $new_path . '/slurm_job.tar.gz';
     }
 
@@ -52,16 +56,15 @@ class JobController extends BaseController
     {
         $job = new Job();
         $input = Input::all();
-        $user = Auth::getUser();
+        $user_id = Auth::getUser()->id;
 
         $validation = $job->validate($input);
 
         if ($validation->passes()) {
-            $remote = SSH::into('Caesar');
 
             $edge_list = EdgeList::where('name', '=', Input::get('edge_list'))->first();
             //TODO: Check for unique job
-            $job->user_id = $user->id;
+            $job->user_id = $user_id;
             $job->edge_list_id = $edge_list->id;
             $job->upper_weight = Input::get('upper_weight');
             $job->lower_weight = Input::get('lower_weight');
@@ -74,31 +77,13 @@ class JobController extends BaseController
             $job->save();
 
             $cmd_options = $job->generateOptions($edge_list->file_name, $input);
-            // Generate the job file
-            $local_file = $this->generateJobFile($user, $cmd_options, $edge_list->file_name, $job->id);
+            $local_file = $this->generateJobFile($user_id, $cmd_options, $edge_list->file_name, $job->id);
 
-            // Upload and run the job file
-            $remote->run(array(
-                "cd webcfinder/$user->id",
-                "mkdir $job->id",
-            ));
-
-            $remote->put($local_file, "webcfinder/$user->id/$job->id/slurm_job.tar.gz" );
-
-            $remote->run(array(
-                "cd webcfinder/$user->id/$job->id",
-                "tar -xzf slurm_job.tar.gz",
-                "chmod +x slurm_job.sh",
-                "./slurm_job.sh"
-            ));
-
-            // Delete the local job dir
-            $working_dir = storage_path() . "/files/$user->id" . "/$job->id";
-            if (File::isDirectory($working_dir)) {
-                File::deleteDirectory($working_dir);
-            }
-                $data = $local_file;
-            return View::make('job.test')->with('data', $data);
+            Queue::push('SubmitJob', array(
+                'user_id'=>$user_id,
+                'job_id'=>$job->id,
+                'local_file'=>$local_file));
+            return Redirect::to('/');
         }
     }
 
