@@ -160,8 +160,15 @@ class JobController extends BaseController
 
     public function delete($id)
     {
-        $user_id = Auth::getUser()->id;
+        $job = Job::find($id);
 
+        $file_path = storage_path() . "/files/$job->user_id/results/job_$id.tar.gz";
+        if (File::exists($file_path)) {
+            File::delete($file_path);
+        }
+        $job->delete();
+
+        return Redirect::to('/job/manage');
     }
 }
 

@@ -25,6 +25,8 @@
                     <td class="text-center text-info">Running</td>
                 @elseif ($job->status == "IN QUEUE")
                     <td class="text-center text-info">Processing</td>
+                @elseif ($job->status == "UPDATING")
+                    <td class="text-center text-info">Updating</td>
                 @endif
                 <td class="text-muted text-center">{{ $job->created_at }}</td>
                 <td>
