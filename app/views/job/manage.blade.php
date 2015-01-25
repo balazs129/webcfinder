@@ -21,8 +21,10 @@
                 <td class="text-center text-muted">{{ $job->cfinder_options }}</td>
                 @if ($job->status == "FINISHED")
                    <td class="text-center text-success">Finished</td>
-                @elseif ($job->status == "PENDING")
+                @elseif ($job->status == "RUNNING")
                     <td class="text-center text-info">Running</td>
+                @elseif ($job->status == "IN QUEUE")
+                    <td class="text-center text-info">Processing</td>
                 @endif
                 <td class="text-muted text-center">{{ $job->created_at }}</td>
                 <td>
@@ -36,7 +38,7 @@
                             <span class="glyphicon glyphicon-trash"></span>
                             Delete
                         </a>
-                    @elseif ($job->status == 'PENDING')
+                    @elseif ($job->status == 'RUNNING')
                     <a class="btn text-warning" href="/job/cancel/{{ $job->id }}">
                         <span class="glyphicon glyphicon-remove"></span>Cancel Job</a>
                     @endif

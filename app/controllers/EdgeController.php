@@ -17,7 +17,7 @@ class EdgeController extends BaseController {
         $input = Input::all();
 
         $user = Auth::user();
-        $path = "../app/storage/files/{$user->id}";
+        $path = "../app/storage/files/$user->id";
 
         $validation = $edge_list -> validate($input);
         if ($validation->fails())
@@ -27,7 +27,12 @@ class EdgeController extends BaseController {
         else
         {
             $edge_list->file_name   = md5_file(Input::file('uploaded-file'));
-            $edge_list->name = Input::file('uploaded-file')->getClientOriginalName();
+            if (Input::get('name') == '') {
+                $edge_list->name = Input::file('uploaded-file')->getClientOriginalName();
+            } else {
+                $edge_list->name = Input::get('name');
+            }
+
             $edge_list->size = Input::file('uploaded-file')->getSize();
 
             if (File::exists($path."/".$edge_list->file_name)) {
@@ -38,11 +43,20 @@ class EdgeController extends BaseController {
                 return Redirect::to('upload')->withErrors($errors);
             }
 
-            $user -> files() -> save($edge_list);
+            $user->files()->save($edge_list);
 
-            if (Input::file('uploaded-file') -> move($path, $edge_list->file_name))
+            $other_edge_lists = EdgeList::where('user_id', '=', $user->id)->get(array('name'))->toArray();
+
+            // Create an associative array fo select
+            $select_options = array();
+            foreach (array_flatten($other_edge_lists) as $e_list) {
+                $select_options[$e_list] = $e_list;
+            }
+
+            if (Input::file('uploaded-file')->move($path, $edge_list->file_name))
             {
-                return Redirect::to('upload/edit/'.$edge_list->id);
+                return View::make('job.create')->with('uploaded', $edge_list->name)
+                    ->with('edge_list', $select_options);
             }
             else
             {
@@ -88,7 +102,12 @@ class EdgeController extends BaseController {
     public function deleteEdgeList($id)
     {
         $edge_lists = EdgeList::find($id);
+        $file_path = storage_path() . "/files/$edge_lists->user_id/$edge_lists->file_name";
+        if (File::exists($file_path)) {
+            File::delete($file_path);
+        }
         $edge_lists->delete();
+
         return Redirect::to('files');
     }
 }

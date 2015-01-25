@@ -1,9 +1,9 @@
 <?php
 
 class SubmitJob {
-    public function fire($job, $data)
+    public function fire($queue_job, $data)
     {
-        $remote = SSH::into('Caesar');
+        $remote = SSH::into('Default');
 
         // Upload and run the job file
         $remote->run(array(
@@ -13,18 +13,19 @@ class SubmitJob {
             "mkdir {$data['job_id']}",
         ));
 
-        $remote->put($data['local_file'], "webcfinder/{$data['user_id']}/{$data['job_id']}/slurm_job.tar.gz" );
+        $remote->put($data['local_file'], "webcfinder/{$data['user_id']}/{$data['job_id']}/wcf_{$data['job_id']}.tar.gz");
 
-        $slurm_id = '';
         $remote->run(array(
             "cd webcfinder/{$data['user_id']}/{$data['job_id']}",
-            "tar -xzf slurm_job.tar.gz",
-            "chmod +x slurm_job.sh",
-            "./slurm_job.sh"
-        ), function ($line) use(&$slurm_id) {
-            $slurm_id = $line.PHP_EOL;
-        });
+            "tar -xzf wcf_{$data['job_id']}.tar.gz",
+            "chmod +x wcf_{$data['job_id']}.sh",
+            "./wcf_{$data['job_id']}.sh"
+        ));
 
+        // TODO: Check if start was successfull
+        $job = Job::find($data['job_id']);
+        $job->status = 'RUNNING';
+        $job->save();
 
         // Delete the local job dir
         $working_dir = storage_path() . "/files/{$data['user_id']}" . "/{$data['job_id']}";
@@ -32,7 +33,7 @@ class SubmitJob {
             File::deleteDirectory($working_dir);
         }
 
-        $job->delete();
+        $queue_job->delete();
     }
 }
 

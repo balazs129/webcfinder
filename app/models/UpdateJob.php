@@ -1,39 +1,41 @@
 <?php
 
 class UpdateJob {
-    public function fire($job, $data)
+    public function fire($queue_job, $data)
     {
-        $remote = SSH::into('Caesar');
+        $remote = SSH::into('Default');
 
-        //TODO: Check if the job finished
-        // Tar the result directory
         $ret_val = '';
         $remote->run(array(
-            "cd webcfinder/{$data['user_id']}/{$data['job_id']}",
-            "if [ ! -d result_files ]; then mv *_files result_files; fi",
-            "if [ ! -f result.tar.gz ]; then tar czf result.tar.gz result_files/; fi",
-            "if [ -f result.tar.gz ]; then echo -n 'OK'; fi"
+            'cd webcfinder',
+            "./update.sh {$data['user_id']}"
         ), function($line) use(&$ret_val) {
-            $ret_val = $line;
+            $ret_val = $line.PHP_EOL;
         });
 
-        if ($ret_val == "OK") {
-            $remote_path = "webcfinder/$user_id/$job_id/result.tar.gz";
-            $local_path = storage_path() . "/files/$user_id/results/job_$job_id.tar.gz";
-            $remote->get($remote_path, $local_path);
+
+        if ($ret_val != "None") {
+            $finished_jobs = explode(' ', $ret_val);
+
+            foreach ($finished_jobs as $tmp_finished) {
+                $finished = str_replace("\n", "", $tmp_finished);
+                $remote_path = "webcfinder/{$data['user_id']}/result_$finished.tar.gz";
+                $local_path = storage_path() . "/files/{$data['user_id']}/results/job_$finished.tar.gz";
+                $remote->get($remote_path, $local_path);
+
+                echo $remote_path;
+
+                // If we got the result file
+                if (File::exists($local_path)) {
+                    // Update the job record
+                    $job = Job::find($finished);
+                    $job->status = "FINISHED";
+                    $job->save();
+                }
+            }
         }
 
-        // If we got the result file
-        if (File::exists($local_path)) {
-            // Delete remote directory
-            $remote->run(array(
-                "cd webcfinder/$user_id",
-                "if [ -d $job_id ]; then rm -fr $job_id; fi"
-            ));
-            // Update the job record
-            $job->status = "FINISHED";
-            $job->save();
-        }
+        $queue_job->delete();
     }
 }
 

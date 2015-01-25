@@ -28,12 +28,7 @@
                 </div>
             </div>
         </div>
-
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted text-center">Webcfinder alpha v0.3.2 using CFinder@Elte.atlasz</p>
-        </div>
-    </footer>
+        @include('footer')
     <script src="/js/webcfinder.min.js"></script>
     </body>
 </html>

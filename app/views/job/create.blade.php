@@ -10,7 +10,11 @@
         <div class="col-sm-4">
         {{ Form::open() }}
             {{ Form::openGroup('file-select', '') }}
-                {{ Form::select('edge_list', $edge_lists) }}
+            @if (isset($uploaded))
+                {{ Form::select('edge_list', $edge_list, $uploaded) }}
+            @else
+                {{ Form::select('edge_list', $edge_list) }}
+            @endif
             {{ Form::closeGroup() }}
         </div>
         <div class="col-sm-4 col-sm-offset-2">

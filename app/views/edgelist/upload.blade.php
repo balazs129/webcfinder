@@ -21,10 +21,21 @@
 
     @endforeach
     {{ Form::open(array('files' => TRUE)) }}
-        {{ Form::openGroup('file-upload', '') }}
+        {{ Form::openGroup('name', 'Name') }}
+            {{ Form::text('name', null) }}
+        {{ Form::closeGroup() }}
+
+        {{ Form::openGroup('description', 'Descriprion') }}
+            {{ Form::textarea('description', null, array('rows'=>'4')) }}
+        {{ Form::closeGroup() }}
+        {{ Form::openGroup('file-upload', 'File') }}
             {{ Form::file('uploaded-file') }}
         {{ Form::closeGroup()}}
-        {{ Form::submit('Upload', array('class' => 'btn btn-sm btn-default')) }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-sm btn-primary">Upload</button>
+            <a class="btn btn-default btn-sm" href="/">Cancel</a>
+        </div>
     {{ Form::close() }}
 @stop
  

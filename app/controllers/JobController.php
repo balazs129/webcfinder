@@ -20,7 +20,7 @@ class JobController extends BaseController
             $select_options[$edge_list] = $edge_list;
         }
 
-        return View::make('job.create')->with('edge_lists', $select_options);
+        return View::make('job.create')->with('edge_list', $select_options);
     }
 
     private function generateJobFile($user_id, $cmd_options, $edge_list, $job_id)
@@ -29,8 +29,8 @@ class JobController extends BaseController
         $new_path = $base_path . "/{$job_id}";
 
         $file_content = "#!/bin/bash\n"
-                      . "/afs/elte.hu/user/b/balazs129/home/webcfinder/CFinder_commandline64 "
-                      . "-l /afs/elte.hu/user/b/balazs129/home/webcfinder/licence.txt $cmd_options ";
+                      . '$HOME/webcfinder/CFinder_commandline64 '
+                      . "-l \$HOME/webcfinder/licence.txt $cmd_options > /dev/null 2>&1";
 
         if (File::isDirectory($base_path . '/' . $job_id)) {
             File::cleanDirectory($base_path . '/'. $job_id);
@@ -38,18 +38,18 @@ class JobController extends BaseController
             File::makeDirectory($base_path . '/' . $job_id);
         }
 
-        $file_path = $new_path . '/slurm_job.sh';
+        $file_path = $new_path . "/wcf_$job_id.sh";
         $job_file = fopen($file_path, 'w');
         File::put($file_path, $file_content);
         fclose($job_file);
         File::copy($base_path . '/' . $edge_list, $new_path . '/' . $edge_list);
 
         // Create tarball for upload
-        $tar_command = "tar -czf $new_path/slurm_job.tar.gz -C $new_path slurm_job.sh $edge_list";
+        $tar_command = "tar -czf $new_path/wcf_$job_id.tar.gz -C $new_path wcf_$job_id.sh $edge_list";
         $process = new Process($tar_command);
         $process->run();
 
-        return $new_path . '/slurm_job.tar.gz';
+        return $new_path . "/wcf_$job_id.tar.gz";
     }
 
     public function submit()
@@ -73,7 +73,7 @@ class JobController extends BaseController
             $job->directed = Input::get('directed');
             $job->lower_link = Input::get('lower_link');
             $job->k_size = Input::get('k_size');
-            $job->status = "PENDING";
+            $job->status = "IN QUEUE";
             $job->save();
 
             $cmd_options = $job->generateOptions($edge_list->file_name, $input);
@@ -90,7 +90,7 @@ class JobController extends BaseController
     public function getUpdate()
     {
         $user_id = Auth::getUser()->id;
-        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'PENDING')->count();
+        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'RUNNING')->count();
 
         return View::make('job.update')->with('pending_jobs', $pending_jobs);
     }
@@ -98,13 +98,10 @@ class JobController extends BaseController
     public function update()
     {
         $user_id = Auth::getUser()->id;
-        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'PENDING')->get();
 
-        foreach ($pending_jobs as $job){
-            Queue::push('UpdateJob', array('user_id'=>$user_id, 'job_id'=>$job->id));
-        };
+        Queue::push('UpdateJob', array('user_id'=>$user_id));
 
-        return View::make('job.test')->With('data', $ret_val);
+        return Redirect::to('/job/manage');
     }
 
     private function getCfinderOptions($job)
