@@ -115,8 +115,8 @@ class JobController extends BaseController
                     'command_file'=>$command_file)
                 );
             }
-//            return Redirect::to('/job/manage');
-            return View::make('job.test')->with('data', Input::all());
+            return Redirect::to('/job/manage');
+//            return View::make('job.test')->with('data', Input::all());
         }
     }
 

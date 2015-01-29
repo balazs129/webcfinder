@@ -7,11 +7,12 @@ class SubmitLocalJob {
     {
         $job = Job::find($data['job_id']);
 
+        $job->status = 'RUNNING';
+        $job->save();
+
         $process = new Process("sh {$data['command_file']}");
         $process->run();
 
-        $job->status = 'RUNNING';
-        $job->save();
 
         if ($process->isSuccessful()) {
             $result_dir = storage_path() . "/files/{$data['user_id']}/results";

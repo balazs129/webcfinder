@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Process\Process;
+
 class EdgeController extends BaseController {
     public function __construct()
     {
@@ -56,6 +58,17 @@ class EdgeController extends BaseController {
 
             if (Input::file('uploaded-file')->move($path, $edge_list->file_name))
             {
+                $graph = storage_path() . "/files/$user->id/$edge_list->file_name";
+                $ps_path = storage_path() . "/cfinder/size.sh";
+                $process = new Process("sh $ps_path $graph");
+
+                $process->run();
+                $out = explode(" ", $process->getOutput());
+
+                $edge_list->nodes = $out[0];
+                $edge_list->edges = $out[1];
+                $edge_list->save();
+
                 return Redirect::to('/job/new')->with('uploaded', $edge_list->name)
                     ->with('edge_list', $select_options);
             }
