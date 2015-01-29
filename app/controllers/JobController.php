@@ -115,7 +115,8 @@ class JobController extends BaseController
                     'command_file'=>$command_file)
                 );
             }
-            return Redirect::to('/job/manage');
+//            return Redirect::to('/job/manage');
+            return View::make('job.test')->with('data', Input::all());
         }
     }
 
@@ -138,18 +139,41 @@ class JobController extends BaseController
 
     private function getCfinderOptions($job)
     {
-        $options = "Default";
+        $options = "";
 
-        if (! is_null($job->upper_weight)) {
-            $options . "Upper weight: $job->upper_weight";
+        if ($job->upper_weight != 0) {
+            $options = $options . "Upper weight: $job->upper_weight";
         }
 
-        if (! is_null($job->lower_weight)) {
-            $options . " Lower weight: $job->lower_weight";
+        if ($job->lower_weight != 0) {
+            $options = $options . " Lower weight: $job->lower_weight";
         }
 
-        return "Upper Weight: 5, Lower Weight: 1, Digits: 4, Max time per node: 1780, Directed, Lower link intensity: 8, k_size: 4";
-//        return "Default";
+        if ($job->digits != 0) {
+            $options = $options . " Digits: $job->digits";
+        }
+
+        if ($job->max_time != 0) {
+            $options = $options . " Max time: $job->max_time";
+        }
+
+        if (! is_null($job->directed)) {
+            $options = $options . " Directed cliques";
+        }
+
+        if ($job->lower_link != 0) {
+            $options = $options . " Lower link threshold: $job->lower_link";
+        }
+
+        if ($job->k_size != 0) {
+            $options = $options . " Clique size: $job->k_size";
+        }
+
+        if (empty($options)) {
+            return "Default";
+        } else {
+            return $options;
+        }
     }
 
     public function manage()
