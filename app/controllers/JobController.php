@@ -28,13 +28,15 @@ class JobController extends BaseController
         $base_path = storage_path() . "/files/{$job_options['user_id']}";
         $new_path = $base_path . "/{$job_options['job_id']}";
 
-        $input_file = $base_path . $job_options['edge_list'];
+        $cfinder_path = storage_path() . "/cfinder";
+        $output_path = $new_path . "/results";
+
         if ($job_options['local']) {
             # Local job file
-            $file_content = <<<EOF
-#!/bin/bash
-\$HOME/cfinder/CFinder_commandline64 {$job_options['cmd_options']} > /dev/null
-EOF;
+            $file_content = "#!/bin/bash\n"
+                        .   "{$cfinder_path}/CFinder_commandline64"
+                        .   " -l {$cfinder_path}/licence.txt"
+                        .   " {$job_options['cmd_options']} -o {$output_path} > /dev/null";
         } else {
             # Atlasz slurm file
             $file_content = "#!/bin/bash\n"
@@ -94,7 +96,8 @@ EOF;
             $job->status = "IN QUEUE";
             $job->save();
 
-            $cmd_options = $job->generateOptions($edge_list->file_name, $input);
+            $to_process = storage_path() . "/files/$user_id/" . $edge_list->file_name;
+            $cmd_options = $job->generateOptions($to_process, $input);
 
             $job_options = array('user_id' => $user_id,
                 'cmd_options' => $cmd_options,
@@ -110,8 +113,7 @@ EOF;
                     'job_id'=>$job->id,
                     'command_file'=>$command_file));
             }
-            $data = Input::all();
-            return View::make('job.test')->with('data', $data);
+            return Redirect::to('/job/manage');
         }
     }
 
@@ -164,7 +166,7 @@ EOF;
     public function downloadResult($id)
     {
         $user_id = Auth::getUser()->id;
-        $file = storage_path() . "/files/$user_id/results/job_$id.tar.gz";
+        $file = storage_path() . "/files/$user_id/results/wcf_$id.tar.gz";
         return Response::download($file,'result.tar.gz', ['content-type' => 'application/x-gtar']);
     }
 
@@ -190,10 +192,11 @@ EOF;
     {
         $job = Job::find($id);
 
-        $file_path = storage_path() . "/files/$job->user_id/results/job_$id.tar.gz";
+        $file_path = storage_path() . "/files/$job->user_id/results/wcf_$id.tar.gz";
         if (File::exists($file_path)) {
             File::delete($file_path);
         }
+
         $job->delete();
 
         return Redirect::to('/job/manage');
