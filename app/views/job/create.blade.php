@@ -10,6 +10,7 @@
         <div class="col-sm-4">
         {{ Form::open() }}
             {{ Form::openGroup('file-select', '') }}
+            {{ $uploaded = Session::get('uploaded') }}
             @if (isset($uploaded))
                 {{ Form::select('edge_list', $edge_list, $uploaded) }}
             @else

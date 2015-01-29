@@ -44,6 +44,7 @@ class EdgeController extends BaseController {
             }
 
             $user->files()->save($edge_list);
+            $edge_list->save();
 
             $other_edge_lists = EdgeList::where('user_id', '=', $user->id)->get(array('name'))->toArray();
 
@@ -55,7 +56,7 @@ class EdgeController extends BaseController {
 
             if (Input::file('uploaded-file')->move($path, $edge_list->file_name))
             {
-                return View::make('job.create')->with('uploaded', $edge_list->name)
+                return Redirect::to('/job/new')->with('uploaded', $edge_list->name)
                     ->with('edge_list', $select_options);
             }
             else

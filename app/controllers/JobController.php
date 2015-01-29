@@ -103,7 +103,8 @@ class JobController extends BaseController
                 'cmd_options' => $cmd_options,
                 'edge_list' => $edge_list->file_name,
                 'job_id' => $job->id,
-                'local' => $job->local);
+                'local' => $job->local
+            );
 
             $command_file = $this->generateJobFile($job_options);
 
@@ -111,7 +112,8 @@ class JobController extends BaseController
                 Queue::push('SubmitLocalJob', array(
                     'user_id'=>$user_id,
                     'job_id'=>$job->id,
-                    'command_file'=>$command_file));
+                    'command_file'=>$command_file)
+                );
             }
             return Redirect::to('/job/manage');
         }
