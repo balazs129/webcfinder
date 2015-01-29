@@ -11,7 +11,8 @@
         <th class="col-md-2">Edge List</th>
         <th class="text-center col-md-4">Cfinder options</th>
         <th class="text-center col-md-1">Status</th>
-        <th class="text-center col-md-3">Created at</th>
+        <th class="text-center col-md-1">Type</th>
+        <th class="text-center">Created at</th>
         <th class="col-md-2">Options</th>
         </thead>
         <tbody>
@@ -27,6 +28,11 @@
                     <td class="text-center text-info">Processing</td>
                 @elseif ($job->status == "UPDATING")
                     <td class="text-center text-info">Updating</td>
+                @endif
+                @if ($job->local == 1)
+                    <td class="text-center">Local</td>
+                @else
+                    <td class="text-center">Remote</td>
                 @endif
                 <td class="text-muted text-center">{{ $job->created_at }}</td>
                 <td>
