@@ -18,7 +18,10 @@
             {{ Form::closeGroup() }}
         </div>
         <div class="col-sm-4 col-sm-offset-2">
-            <p>Select the edge list you want to process.</p>
+            {{ Form::openGroup('location', 'Where to send the job') }}
+                {{ Form::radio('options', null, 'Process locally', true, array('id'=>'local')) }}
+                {{ Form::radio('options', null, 'Send to ELTE Atlasz queue', false, array('id'=>'Atlasz')) }}
+            {{ Form::closeGroup() }}
         </div>
     </div>
 
