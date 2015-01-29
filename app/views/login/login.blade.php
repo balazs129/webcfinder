@@ -17,7 +17,7 @@
             {{ Form::closeGroup() }}
         {{ Form::openGroup('links') }}
             <ul class="text-center list-inline">
-                <li> <a href="/register">Register</a></li>
+                <li class="disabled"> <ahref="/register">Register</a></li>
                 <li> <a href="/reminder">Forgotten Password</a></li>
             </ul>
         {{ Form::closeGroup() }}

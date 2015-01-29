@@ -17,7 +17,7 @@ class CreateJobsTable extends Migration {
 			$table->integer('user_id');
 			$table->integer('edge_list_id');
 			$table->integer('result_id');
-			$table->integer('slurm_id');
+			$table->boolean('local');
 			$table->integer('upper_weight')->nullable();
 			$table->integer('lower_weight')->nullable();
 			$table->integer('digits')->nullable();

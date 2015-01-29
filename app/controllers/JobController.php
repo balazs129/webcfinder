@@ -23,33 +23,50 @@ class JobController extends BaseController
         return View::make('job.create')->with('edge_list', $select_options);
     }
 
-    private function generateJobFile($user_id, $cmd_options, $edge_list, $job_id)
+    private function generateJobFile($job_options)
     {
-        $base_path = storage_path() . "/files/{$user_id}";
-        $new_path = $base_path . "/{$job_id}";
+        $base_path = storage_path() . "/files/{$job_options['user_id']}";
+        $new_path = $base_path . "/{$job_options['job_id']}";
 
-        $file_content = "#!/bin/bash\n"
-                      . '$HOME/webcfinder/CFinder_commandline64 '
-                      . "-l \$HOME/webcfinder/licence.txt $cmd_options > /dev/null 2>&1";
-
-        if (File::isDirectory($base_path . '/' . $job_id)) {
-            File::cleanDirectory($base_path . '/'. $job_id);
+        $input_file = $base_path . $job_options['edge_list'];
+        if ($job_options['local']) {
+            # Local job file
+            $file_content = <<<EOF
+#!/bin/bash
+\$HOME/cfinder/CFinder_commandline64 {$job_options['cmd_options']} > /dev/null
+EOF;
         } else {
-            File::makeDirectory($base_path . '/' . $job_id);
+            # Atlasz slurm file
+            $file_content = "#!/bin/bash\n"
+                . '$HOME/webcfinder/CFinder_commandline64 '
+                . "{$job_options['cmd_options']} > /dev/null 2>&1";
         }
 
-        $file_path = $new_path . "/wcf_$job_id.sh";
+        if (File::isDirectory($base_path . '/' . $job_options['job_id'])) {
+            File::cleanDirectory($base_path . '/'. $job_options['job_id']);
+        } else {
+            File::makeDirectory($base_path . '/' . $job_options['job_id']);
+        }
+
+        $file_path = $new_path . "/wcf_{$job_options['job_id']}.sh";
         $job_file = fopen($file_path, 'w');
         File::put($file_path, $file_content);
         fclose($job_file);
-        File::copy($base_path . '/' . $edge_list, $new_path . '/' . $edge_list);
+        File::copy($base_path . '/' . $job_options['edge_list'],
+            $new_path . '/' . $job_options['edge_list']);
 
         // Create tarball for upload
-        $tar_command = "tar -czf $new_path/wcf_$job_id.tar.gz -C $new_path wcf_$job_id.sh $edge_list";
-        $process = new Process($tar_command);
-        $process->run();
+        if (! $job_options['local']) {
+            $tar_command = "tar -czf $new_path/wcf_{$job_options['job_id']}.tar.gz "
+                . "-C $new_path wcf_{$job_options['job_id']}.sh {$job_options['edge_list']}";
+            $process = new Process($tar_command);
+            $process->run();
 
-        return $new_path . "/wcf_$job_id.tar.gz";
+            return $new_path . "/wcf_{$job_options['job_id']}.tar.gz";
+        }
+        $process = new Process("chmod +x {$new_path}/wcf_{$job_options['job_id']}.sh");
+        $process->run();
+        return $new_path . "/wcf_{$job_options['job_id']}.sh";
     }
 
     public function submit()
@@ -73,17 +90,28 @@ class JobController extends BaseController
             $job->directed = Input::get('directed');
             $job->lower_link = Input::get('lower_link');
             $job->k_size = Input::get('k_size');
+            $job->local = Input::get('local');
             $job->status = "IN QUEUE";
             $job->save();
 
             $cmd_options = $job->generateOptions($edge_list->file_name, $input);
-            $local_file = $this->generateJobFile($user_id, $cmd_options, $edge_list->file_name, $job->id);
 
-            Queue::push('SubmitJob', array(
-                'user_id'=>$user_id,
-                'job_id'=>$job->id,
-                'local_file'=>$local_file));
-            return Redirect::to('/');
+            $job_options = array('user_id' => $user_id,
+                'cmd_options' => $cmd_options,
+                'edge_list' => $edge_list->file_name,
+                'job_id' => $job->id,
+                'local' => $job->local);
+
+            $command_file = $this->generateJobFile($job_options);
+
+            if ($job->local) {
+                Queue::push('SubmitLocalJob', array(
+                    'user_id'=>$user_id,
+                    'job_id'=>$job->id,
+                    'command_file'=>$command_file));
+            }
+            $data = Input::all();
+            return View::make('job.test')->with('data', $data);
         }
     }
 

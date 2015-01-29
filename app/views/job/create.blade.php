@@ -19,8 +19,8 @@
         </div>
         <div class="col-sm-4 col-sm-offset-2">
             {{ Form::openGroup('location', 'Where to send the job') }}
-                {{ Form::radio('options', null, 'Process locally', true, array('id'=>'local')) }}
-                {{ Form::radio('options', null, 'Send to ELTE Atlasz queue', false, array('id'=>'Atlasz')) }}
+                {{ Form::radio('local', '1', 'Process locally', true) }}
+                {{ Form::radio('local', '0', 'Send to ELTE Atlasz', false) }}
             {{ Form::closeGroup() }}
         </div>
     </div>
