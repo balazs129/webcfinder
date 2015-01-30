@@ -8,12 +8,12 @@
     </div>
     <table class="table table-condensed table-hover">
         <thead>
-            <th>File name</th>
-            <th>Size (byte)</th>
-            <th>Nodes</th>
-            <th>Edges</th>
-            <th>Uploaded at</th>
-            <th>Options</th>
+        <th>File name</th>
+        <th>Size (byte)</th>
+        <th>Nodes</th>
+        <th>Edges</th>
+        <th>Uploaded at</th>
+        <th>Options</th>
         </thead>
         <tbody>
         @foreach($files as $file)
@@ -25,15 +25,15 @@
                 <td>{{ $file->created_at }}</td>
                 <td class="col-md-2">
                     <div class="btn-group" role="group">
-                    <a class="btn text-success" href="/upload/edit/{{ $file->id }}">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                        Edit
-                    </a>
-                    <a class="btn text-danger" href="/upload/delete/{{ $file->id }}">
-                        <span class="glyphicon glyphicon-remove"></span>
-                        Delete
-                    </a>
-                        </div>
+                        <a class="btn text-success" href="/upload/edit/{{ $file->id }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            Edit
+                        </a>
+                        <a class="btn text-danger" href="/upload/delete/{{ $file->id }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Delete
+                        </a>
+                    </div>
                 </td>
             <tr>
         @endforeach

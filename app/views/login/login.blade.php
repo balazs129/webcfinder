@@ -22,7 +22,7 @@
             </ul>
         {{ Form::closeGroup() }}
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-10 col-md-offset-2">
                 {{ Form::submit('Login', array('class' => 'btn btn-sm btn-block btn-success')) }}
                 </div>
             </div>

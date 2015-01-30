@@ -26,10 +26,10 @@ class JobController extends BaseController
     private function generateJobFile($job_options)
     {
         $base_path = storage_path() . "/files/{$job_options['user_id']}";
-        $new_path = $base_path . "/{$job_options['job_id']}";
+        $job_path = $base_path . "/{$job_options['job_id']}";
 
         $cfinder_path = storage_path() . "/cfinder";
-        $output_path = $new_path . "/results";
+        $output_path = $job_path . "/results";
 
         if ($job_options['local']) {
             # Local job file
@@ -40,8 +40,9 @@ class JobController extends BaseController
         } else {
             # Atlasz slurm file
             $file_content = "#!/bin/bash\n"
-                . '$HOME/webcfinder/CFinder_commandline64 '
-                . "{$job_options['cmd_options']} > /dev/null 2>&1";
+                . 'srun $HOME/webcfinder/CFinder_commandline64 '
+                . "{$job_options['cmd_options']}";
+//                . "> /dev/null 2>&1";
         }
 
         if (File::isDirectory($base_path . '/' . $job_options['job_id'])) {
@@ -50,25 +51,29 @@ class JobController extends BaseController
             File::makeDirectory($base_path . '/' . $job_options['job_id']);
         }
 
-        $file_path = $new_path . "/wcf_{$job_options['job_id']}.sh";
+        $file_path = $job_path . "/wcf_{$job_options['job_id']}.sh";
         $job_file = fopen($file_path, 'w');
         File::put($file_path, $file_content);
         fclose($job_file);
         File::copy($base_path . '/' . $job_options['edge_list'],
-            $new_path . '/' . $job_options['edge_list']);
+            $job_path . '/' . $job_options['edge_list']);
 
-        // Create tarball for upload
-        if (! $job_options['local']) {
-            $tar_command = "tar -czf $new_path/wcf_{$job_options['job_id']}.tar.gz "
-                . "-C $new_path wcf_{$job_options['job_id']}.sh {$job_options['edge_list']}";
+        // Create tarball for remote job to upload
+        if ($job_options['local']) {
+            $process = new Process("chmod +x {$job_path}/wcf_{$job_options['job_id']}.sh");
+            $process->run();
+            $ret_val = $job_path . "/wcf_{$job_options['job_id']}.sh";
+        } else {
+            $tar_command = "tar -czf $job_path/wcf_{$job_options['job_id']}.tar.gz "
+                . "-C $job_path wcf_{$job_options['job_id']}.sh {$job_options['edge_list']}";
             $process = new Process($tar_command);
             $process->run();
 
-            return $new_path . "/wcf_{$job_options['job_id']}.tar.gz";
+            $ret_val = $job_path . "/wcf_{$job_options['job_id']}.tar.gz";
         }
-        $process = new Process("chmod +x {$new_path}/wcf_{$job_options['job_id']}.sh");
-        $process->run();
-        return $new_path . "/wcf_{$job_options['job_id']}.sh";
+
+        return $ret_val;
+
     }
 
     public function submit()
@@ -96,7 +101,11 @@ class JobController extends BaseController
             $job->status = "IN QUEUE";
             $job->save();
 
-            $to_process = storage_path() . "/files/$user_id/" . $edge_list->file_name;
+            if ($job->local) {
+                $to_process = storage_path() . "/files/$user_id/" . $edge_list->file_name;
+            } else {
+                $to_process = "\$HOME/webcfinder/$user_id/$job->id/$edge_list->file_name";
+            }
             $cmd_options = $job->generateOptions($to_process, $input);
 
             $job_options = array('user_id' => $user_id,
@@ -110,9 +119,17 @@ class JobController extends BaseController
 
             if ($job->local) {
                 Queue::push('SubmitLocalJob', array(
-                    'user_id'=>$user_id,
-                    'job_id'=>$job->id,
-                    'command_file'=>$command_file)
+                    'user_id' => $user_id,
+                    'job_id' => $job->id,
+                    'command_file' => $command_file
+                    )
+                );
+            } else {
+                Queue::push('SubmitRemoteJob', array (
+                    'user_id' => $user_id,
+                    'job_id' => $job->id,
+                    'local_file' => $command_file
+                    )
                 );
             }
             return Redirect::to('/job/manage');

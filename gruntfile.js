@@ -83,6 +83,11 @@ module.exports = function (grunt) {
                     'public/js/webcfinder.min.js': ['app/assets/js/webcfinder.js']
                 }
             }
+        },
+
+        watch: {
+            files: ['app/assets/css/custombootstrap.less'],
+            tasks: ['dist-css']
         }
     });
 
@@ -94,6 +99,8 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     // CSS distribution task
     grunt.registerTask('dist-css', ['clean:css', 'less:compileCore', 'autoprefixer', 'usebanner', 'cssmin']);
