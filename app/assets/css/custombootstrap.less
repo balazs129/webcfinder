@@ -50,7 +50,7 @@
 @import "responsive-utilities.less";
 
 //== Colors
-@gray-base: #b3b3b3;
+@gray-base: #bababa;
 
 @brand-primary:         @gray-base;
 @brand-success: #4add3c;
@@ -62,6 +62,7 @@
 @body-bg: #343638;
 @text-color:            @gray-base;
 @link-color: @gray-dark;
+@link-hover-decoration: none;
 
 //== Typography
 @font-size-base:                   13px;
@@ -81,7 +82,7 @@
 @btn-font-weight:                normal;
 
 @btn-default-color:              #333;
-@btn-default-bg:                 #fff;
+@btn-default-bg:                 darken(@brand-primary, 10%);
 @btn-default-border:             #ccc;
 
 @btn-primary-color: #d2ae82;
@@ -109,6 +110,8 @@
 //== Forms
 @input-bg:                       #3E4649;
 @input-color-placeholder: darken(@gray-base, 15%);
+@input-color: @gray-base;
+@input-border: darken(@brand-info, 20%);
 
 //== Grid system
 //** Number of columns in the grid.
@@ -118,10 +121,6 @@
 
 //== Navbar
 @navbar-height:                    35px;
-
-@navbar-default-color:             #777;
-@navbar-default-bg:                #f8f8f8;
-@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Inverted navbar links
 @navbar-inverse-link-color:                 lighten(@gray-light, 15%);
@@ -194,25 +193,6 @@
 //** Popover outer arrow fallback color
 @popover-arrow-outer-fallback-color:  darken(@popover-fallback-border-color, 20%);
 
-//== Labels
-//** Default label background color
-@label-default-bg:            @gray-light;
-//** Primary label background color
-@label-primary-bg:            @brand-primary;
-//** Success label background color
-@label-success-bg:            @brand-success;
-//** Info label background color
-@label-info-bg:               @brand-info;
-//** Warning label background color
-@label-warning-bg:            @brand-warning;
-//** Danger label background color
-@label-danger-bg:             @brand-danger;
-
-//** Default label text color
-@label-color:                 #fff;
-//** Default text color of a linked label
-@label-link-hover-color:      #fff;
-
 //== Alerts
 //
 //## Define alert colors, border radius, and padding.
@@ -238,8 +218,6 @@
 @alert-danger-border:         @state-danger-border;
 
 //== Type
-//
-//##
 
 //** Horizontal offset for forms and lists.
 @component-offset-horizontal: 180px;
@@ -298,13 +276,9 @@ body {
   margin-right: -21px;
 }
 .nav-sidebar > li > a {
-  padding: 0px 20px 5px;
+  padding: 0px 25px 5px;
 }
 
-.nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
-  background-color: #428bca;
-  color: #fff;
-}
 .main {
   padding: 20px;
 }
@@ -325,5 +299,5 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 20px;
-  background-color: #f5f5f5;
+  background-color: #252525;
 }
