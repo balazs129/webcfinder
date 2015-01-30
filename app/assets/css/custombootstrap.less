@@ -63,6 +63,7 @@
 @text-color:            @gray-base;
 @link-color: @gray-dark;
 @link-hover-decoration: none;
+@link-hover-color: darken(@link-color, 50%);
 
 //== Typography
 @font-size-base:                   13px;
@@ -111,9 +112,7 @@
 @input-border: darken(@brand-info, 20%);
 
 //== Grid system
-//** Number of columns in the grid.
 @grid-columns:              14;
-//** Padding between columns. Gets divided in half for the left and right.
 @grid-gutter-width:         20px;
 
 //== Navbar
@@ -191,9 +190,6 @@
 @popover-arrow-outer-fallback-color:  darken(@popover-fallback-border-color, 20%);
 
 //== Alerts
-//
-//## Define alert colors, border radius, and padding.
-
 @alert-padding:               15px;
 @alert-border-radius:         @border-radius-base;
 @alert-link-font-weight:      bold;
@@ -215,27 +211,8 @@
 @alert-danger-border:         @state-danger-border;
 
 //== Type
-
-//** Horizontal offset for forms and lists.
-@component-offset-horizontal: 180px;
-//** Text muted color
 @text-muted:                  @gray-light;
-//** Abbreviations and acronyms border color
-@abbr-border-color:           @gray-light;
-//** Headings small color
-@headings-small-color:        @gray-light;
-//** Blockquote small color
-@blockquote-small-color:      @gray-light;
-//** Blockquote font size
-@blockquote-font-size:        (@font-size-base * 1.25);
-//** Blockquote border color
-@blockquote-border-color:     @gray-lighter;
-//** Page header border color
 @page-header-border-color: #ddb988;
-//** Width of horizontal description list titles
-@dl-horizontal-offset:        @component-offset-horizontal;
-//** Horizontal line color.
-@hr-border:                   @gray-lighter;
 
 
 body {
