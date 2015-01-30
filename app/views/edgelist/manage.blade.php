@@ -8,12 +8,12 @@
     </div>
     <table class="table table-condensed table-hover">
         <thead>
-        <th>File name</th>
-        <th>Size (byte)</th>
-        <th>Nodes</th>
-        <th>Edges</th>
-        <th>Uploaded at</th>
-        <th>Options</th>
+        <th class="col-md-5">File name</th>
+        <th class="col-md-1">Size (byte)</th>
+        <th class="col-md-1">Nodes</th>
+        <th class="col-md-1">Edges</th>
+        <th class="col-md-2">Uploaded at</th>
+        <th class="col-md-2">Options</th>
         </thead>
         <tbody>
         @foreach($files as $file)
@@ -23,7 +23,7 @@
                 <td>{{ $file->nodes }}</td>
                 <td>{{ $file->edges }}</td>
                 <td>{{ $file->created_at }}</td>
-                <td class="col-md-2">
+                <td>
                     <div class="btn-group" role="group">
                         <a class="btn text-success" href="/upload/edit/{{ $file->id }}">
                             <span class="glyphicon glyphicon-pencil"></span>

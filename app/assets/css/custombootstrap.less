@@ -53,7 +53,7 @@
 @gray-base: #b3b3b3;
 
 @brand-primary:         @gray-base;
-@brand-success: #4ce89e;
+@brand-success: #4add3c;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
@@ -61,7 +61,7 @@
 //== Scaffolding
 @body-bg: #343638;
 @text-color:            @gray-base;
-@link-color: #94b8ec;
+@link-color: @gray-dark;
 
 //== Typography
 @font-size-base:                   13px;
@@ -72,7 +72,7 @@
 @table-bg:#282B2E;
 @table-condensed-cell-padding:      4px;
 @table-border-color: #545454;
-@table-bg-hover: rgb(102, 89, 76);
+@table-bg-hover: lighten(@table-bg, 5%);
 
 //== Buttons
 //
@@ -256,7 +256,7 @@
 //** Blockquote border color
 @blockquote-border-color:     @gray-lighter;
 //** Page header border color
-@page-header-border-color:    @gray-lighter;
+@page-header-border-color: #ddb988;
 //** Width of horizontal description list titles
 @dl-horizontal-offset:        @component-offset-horizontal;
 //** Horizontal line color.

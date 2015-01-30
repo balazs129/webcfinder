@@ -8,12 +8,12 @@
     </div>
     <table class="table table-condensed table-hover">
         <thead>
-        <th class="col-md-2">Edge List</th>
-        <th class="text-center col-md-4">Cfinder options</th>
+        <th class="col-md-4">Edge List</th>
+        <th class="text-center col-md-2">Cfinder options</th>
         <th class="text-center col-md-1">Status</th>
         <th class="text-center col-md-1">Type</th>
-        <th class="text-center">Created at</th>
-        <th class="col-md-2">Options</th>
+        <th class="text-center col-md-2">Created at</th>
+        <th class="col-md-3">Options</th>
         </thead>
         <tbody>
         @foreach($jobs as $job)
@@ -40,7 +40,7 @@
                         @if ($job->status == 'FINISHED')
                         <a class="btn text-success" href="/job/download/{{ $job->id }}">
                             <span class="glyphicon glyphicon-download-alt"></span>
-                            Download
+                            Download results
                         </a>
                         <a class="btn text-danger" href="/job/delete/{{ $job->id }}">
                             <span class="glyphicon glyphicon-trash"></span>
