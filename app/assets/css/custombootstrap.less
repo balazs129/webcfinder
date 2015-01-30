@@ -59,7 +59,7 @@
 @brand-danger:          #d9534f;
 
 //== Scaffolding
-@body-bg: #343638;
+@body-bg: #3e4042;
 @text-color:            @gray-base;
 @link-color: @gray-dark;
 @link-hover-decoration: none;
@@ -76,21 +76,18 @@
 @table-bg-hover: lighten(@table-bg, 5%);
 
 //== Buttons
-//
-//## For each of Bootstrap's buttons, define text, background and border color.
-
 @btn-font-weight:                normal;
 
-@btn-default-color:              #333;
-@btn-default-bg:                 darken(@brand-primary, 10%);
-@btn-default-border:             #ccc;
+@btn-default-color: #999999;
+@btn-default-bg:                 @body-bg;
+@btn-default-border:             darken(@btn-default-color, 30%);
 
-@btn-primary-color: #d2ae82;
-@btn-primary-bg:                 @brand-primary;
+@btn-primary-color: #ddb988;
+@btn-primary-bg:                 #282B2E;
 @btn-primary-border:             darken(@btn-primary-bg, 5%);
 
 @btn-success-color:              #fff;
-@btn-success-bg:                 darken(@brand-success, 20%);
+@btn-success-bg:                 darken(@brand-success, 25%);
 @btn-success-border:             darken(@btn-success-bg, 5%);
 
 @btn-info-color:                 #fff;
