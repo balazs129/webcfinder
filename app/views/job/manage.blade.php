@@ -39,11 +39,11 @@
                     <div class="btn-group" role="group">
                         @if ($job->status == 'FINISHED')
                         <a class="btn text-success" href="/job/download/{{ $job->id }}">
-                            <span class="glyphicon glyphicon-download-alt"></span>
+                            <span class="glyphicon glyphicon-save"></span>
                             Download results
                         </a>
                         <a class="btn text-danger" href="/job/delete/{{ $job->id }}">
-                            <span class="glyphicon glyphicon-trash"></span>
+                            <span class="glyphicon glyphicon-remove"></span>
                             Delete
                         </a>
                     @elseif ($job->status == 'RUNNING')

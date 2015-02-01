@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    <div class="col-md-offset-2 col-md-10">
+    <div class="col-md-offset-4 col-md-6">
         <div class="row">
             <div class="page-header">
                 <h3>Upload new edge list</h3>
@@ -34,6 +34,10 @@
             {{ Form::file('uploaded-file') }}
             {{ Form::closeGroup()}}
 
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-md-offset-5 col-md-3 text-center">
             <div class="form-actions">
                 <button type="submit" class="btn btn-sm btn-primary">Upload</button>
                 <a class="btn btn-default btn-sm" href="/">Cancel</a>

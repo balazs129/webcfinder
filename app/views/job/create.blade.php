@@ -40,16 +40,16 @@
             {{ Form::openGroup('other-threshold', 'Lower weight threshold') }}
                 {{ Form::text('lower_weight', null, array('class'=>'input-sm', 'placeholder'=>'Lower weight threshold')) }}
             {{ Form::closeGroup() }}
-            {{ Form::openGroup('weight-threshold', 'Number of digits') }}
+            {{ Form::openGroup('digits', 'Number of digits') }}
                 {{ Form::number('digits', null, array('class'=>'input-sm')) }}
             {{ Form::closeGroup() }}
         </div>
 
         <div class="col-sm-4 col-sm-offset-1">
-            {{ Form::openGroup('other-threshold', 'Other options') }}
+            {{ Form::openGroup('other-threshold', 'Maximal time per node') }}
                 {{ Form::text('max_time', null, array('class'=>'input-sm', 'placeholder'=>'Maximal allowed time per node')) }}
             {{ Form::closeGroup() }}
-            {{ Form::openGroup('other-threshold', '') }}
+            {{ Form::openGroup('other-threshold', 'Lower link weight intensity') }}
                 {{ Form::text('lower_link', null, array('class'=>'input-sm', 'placeholder'=>'Lower link weight intensity threshold')) }}
             {{ Form::closeGroup() }}
             {{ Form::openGroup('other-threshold', '') }}
