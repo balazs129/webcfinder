@@ -21,7 +21,6 @@ class SubmitRemoteJob
         $remote->run(array(
             "cd webcfinder/{$data['user_id']}/{$data['job_id']}",
             "tar -xzf slurm_job.tar.gz",
-//            "chmod +x wcf_{$data['job_id']}.sh",
             "sbatch wcf_{$data['job_id']}.sh"
         ), function ($line) use (&$ret_val) {
             $ret_val = $line.PHP_EOL;

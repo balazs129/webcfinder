@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'default' => 'Caesar',
+	'default' => 'Default',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -29,9 +29,9 @@ return array(
 	'connections' => array(
 
 		'Default' => array(
-			'host'      => 'login03.caesar.elte.hu',
-			'username'  => 'balazs129',
-			'password'  => 'password17',
+			'host'      => '',
+			'username'  => '',
+			'password'  => '',
 			'key'       => '',
 			'keyphrase' => '',
 			'root'      => '',
