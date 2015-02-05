@@ -117,14 +117,18 @@
 @navbar-height:                    35px;
 
 // Inverted navbar links
+@navbar-inverse-color:                      lighten(@gray-light, 15%);
+@navbar-inverse-bg:                         #282B2E;
+@navbar-inverse-border:                     darken(@headings-color, 5%);
+
 @navbar-inverse-link-color:                 lighten(@gray-light, 15%);
-@navbar-inverse-link-hover-color:           darken(@brand-success, 10%);
-@navbar-inverse-brand-color: #ddb988;
+@navbar-inverse-link-hover-color:           lighten(@headings-color, 20%);
+@navbar-inverse-brand-color:                darken(#ddb988, 10%);
 @navbar-inverse-brand-hover-color:          #fff;
 @navbar-inverse-brand-hover-bg:             transparent;
 
 //== Navs
-@nav-link-padding:                          10px 15px;
+@nav-link-padding:                          10px 20px;
 @nav-link-hover-bg:                         transparent;
 
 @nav-disabled-link-color: #646464;
@@ -229,7 +233,7 @@ body {
 }
 @media (min-width: 768px) {
   .sidebar {
-    background-color: darken(#DFDFDF, 2%);
+    background-color: darken(#DFDFDF, 5%);
     border-right: 1px solid #8c6434;
     bottom: 0;
     display: block;
@@ -242,6 +246,8 @@ body {
     z-index: 1000;
   }
 }
+.sidebar a {
+}
 .nav-sidebar {
   margin-bottom: 20px;
   margin-left: -20px;
@@ -249,6 +255,7 @@ body {
 }
 .nav-sidebar > li > a {
   padding: 0px 25px 5px;
+  font-weight: 600;
 }
 
 .main {
@@ -271,5 +278,5 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 20px;
-  background-color: #252525;
+  background-color: lighten(@gray-light, 30%);
 }

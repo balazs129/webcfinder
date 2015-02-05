@@ -21,7 +21,6 @@ class SubmitLocalJob {
                 File::makeDirectory($result_dir);
             }
 
-
             // Create tarball and move to the result dir
             $tar_chd = storage_path() . "/files/{$data['user_id']}/{$data['job_id']}";
             $tar_command = "tar -czf {$result_dir}/wcf_{$data['job_id']}.tar.gz "
@@ -36,6 +35,9 @@ class SubmitLocalJob {
             }
 
             $job->status = 'FINISHED';
+            $job->save();
+        } else {
+            $job->status = 'FAILED';
             $job->save();
         }
 

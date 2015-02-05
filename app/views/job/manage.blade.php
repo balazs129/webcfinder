@@ -28,6 +28,8 @@
                     <td class="text-center text-info">Processing</td>
                 @elseif ($job->status == "UPDATING")
                     <td class="text-center text-info">Updating</td>
+                @elseif($job->status == "FAILED")
+                    <td class="text-center text-danger">Failed</td>
                 @endif
                 @if ($job->local == 1)
                     <td class="text-center">Local</td>
@@ -47,8 +49,15 @@
                             Delete
                         </a>
                     @elseif ($job->status == 'RUNNING')
-                    <a class="btn text-warning" href="/job/cancel/{{ $job->id }}">
-                        <span class="glyphicon glyphicon-remove"></span>Cancel Job</a>
+                        <a class="btn text-warning" href="/job/cancel/{{ $job->id }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Cancel Job
+                        </a>
+                    @elseif ($job->status == 'FAILED')
+                        <a class="btn text-danger" href="/job/delete/{{ $job->id }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Delete
+                        </a>
                     @endif
                     </div>
                 </td>
