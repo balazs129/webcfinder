@@ -50,42 +50,38 @@
 @import "responsive-utilities.less";
 
 //== Colors
-@gray-base: #bababa;
-
-@brand-primary:         @gray-base;
-@brand-success: #4add3c;
+@brand-primary:         darken(#428bca, 6.5%); // #337ab7
+@brand-success:         #5cb85c;
 @brand-info:            #5bc0de;
 @brand-warning:         #f0ad4e;
 @brand-danger:          #d9534f;
 
 //== Scaffolding
-@body-bg: #343638;
-@text-color:            @gray-base;
-@link-color: @gray-dark;
+@link-color: darken(@brand-primary, 5%);
 @link-hover-decoration: none;
-@link-hover-color: darken(@link-color, 50%);
+@link-hover-color: darken(@link-color, 20%);
 
 //== Typography
 @font-size-base:                   13px;
-@headings-color: #d2ae82;
-@headings-small-color: darken(@headings-color, 25%);
+@headings-color: darken(#d2ae82, 10%);
+@headings-small-color: darken(@headings-color, 15%);
 
 //== Tables
-@table-bg:#282B2E;
+@table-bg: #FFFFFF;
 @table-condensed-cell-padding:      4px;
 @table-border-color: #545454;
-@table-bg-hover: lighten(@table-bg, 5%);
+@table-bg-hover: darken(@table-bg, 8%);
 
 //== Buttons
 @btn-font-weight:                normal;
 
-@btn-default-color: #999999;
+@btn-default-color: @gray-light;
 @btn-default-bg:                 @body-bg;
-@btn-default-border:             darken(@btn-default-color, 30%);
+@btn-default-border:             lighten(@gray-light, 10%);
 
-@btn-primary-color: #ddb988;
-@btn-primary-bg:                 #282B2E;
-@btn-primary-border:             darken(@btn-primary-bg, 5%);
+@btn-primary-color: @gray-dark;
+@btn-primary-bg:                 #F8AC59;
+@btn-primary-border:             darken(@btn-primary-bg, 10%);
 
 @btn-success-color:              #fff;
 @btn-success-bg:                 darken(@brand-success, 25%);
@@ -106,10 +102,12 @@
 @btn-link-disabled-color:        @gray-light;
 
 //== Forms
-@input-bg:                       #3E4649;
-@input-color-placeholder: darken(@gray-base, 15%);
+@input-color-placeholder: @gray-light;
 @input-color: @gray-base;
-@input-border: darken(@brand-info, 20%);
+@input-border: lighten(@headings-color, 20%);
+@input-border-focus: darken(@headings-color, 5%);
+@input-border-radius:      0;
+
 
 //== Grid system
 @grid-columns:              14;
@@ -231,7 +229,7 @@ body {
 }
 @media (min-width: 768px) {
   .sidebar {
-    background-color: #2E3539;
+    background-color: darken(#DFDFDF, 2%);
     border-right: 1px solid #8c6434;
     bottom: 0;
     display: block;
