@@ -240,6 +240,11 @@ class JobController extends BaseController
             File::delete($file_path);
         }
 
+        $job_path = storage_path() . "/files//$job->user_id/$job->id";
+        if (File::isDirectory($job_path)) {
+            File::deleteDirectory($job_path);
+        }
+
         $job->delete();
 
         return Redirect::to('/job/manage');
