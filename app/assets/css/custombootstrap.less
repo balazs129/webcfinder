@@ -18,7 +18,7 @@
 
 // Components
 @import "component-animations.less";
-//@import "dropdowns.less";
+@import "dropdowns.less";
 @import "button-groups.less";
 @import "input-groups.less";
 @import "navs.less";
@@ -68,8 +68,7 @@
 
 //== Tables
 @table-bg: #FFFFFF;
-@table-condensed-cell-padding:      4px;
-@table-border-color: #545454;
+@table-border-color: @gray-lighter;
 @table-bg-hover: darken(@table-bg, 8%);
 
 //== Buttons
@@ -213,7 +212,7 @@
 @alert-danger-border:         @state-danger-border;
 
 //== Type
-@text-muted:                  @gray-darker;
+@text-muted:                  @gray-light;
 @page-header-border-color: #ddb988;
 
 
@@ -233,7 +232,7 @@ body {
 }
 @media (min-width: 768px) {
   .sidebar {
-    background-color: darken(#DFDFDF, 5%);
+    background-color: lighten(#282B2E, 70%);
     border-right: 1px solid #8c6434;
     bottom: 0;
     display: block;
@@ -280,3 +279,34 @@ body {
   height: 20px;
   background-color: lighten(@gray-light, 30%);
 }
+
+table {
+  border-collapse: separate;
+//  border-spacing: 0 5px;
+}
+
+thead th {
+  background-color: #675b38;
+  color: white;
+}
+
+.table tbody>tr>td.vert-align{
+  vertical-align: middle;
+}
+
+//th, td {
+//  padding-top: 5px;
+//  padding-bottom: 5px;
+//}
+
+//tr td:first-child,
+//tr th:first-child {
+//  border-top-left-radius: 0px;
+//  border-bottom-left-radius: 0px;
+//}
+//
+//tr td:last-child,
+//tr th:last-child {
+//  border-top-right-radius: 6px;
+//  border-bottom-right-radius: 6px;
+//}

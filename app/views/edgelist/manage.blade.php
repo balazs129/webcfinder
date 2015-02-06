@@ -18,11 +18,11 @@
         <tbody>
         @foreach($files as $file)
             <tr>
-                <td title="{{ $file->description }}">{{ $file->name }}</td>
-                <td>{{ $file->size }}</td>
-                <td>{{ $file->nodes }}</td>
-                <td>{{ $file->edges }}</td>
-                <td>{{ $file->created_at }}</td>
+                <td class="vert-align" title="{{ $file->description }}">{{ $file->name }}</td>
+                <td class="vert-align">{{ $file->size }}</td>
+                <td class="vert-align">{{ $file->nodes }}</td>
+                <td class="vert-align">{{ $file->edges }}</td>
+                <td class="vert-align">{{ $file->created_at }}</td>
                 <td>
                     <div class="btn-group" role="group">
                         <a class="btn text-success" href="/upload/edit/{{ $file->id }}">

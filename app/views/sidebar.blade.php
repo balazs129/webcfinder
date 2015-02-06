@@ -9,10 +9,10 @@
     <li><a href="/job/manage">Manage jobs</a></li>
 </ul>
 <ul class="nav nav-sidebar">
-    <li><a href="#">Example data set</a> </li>
-    <li><a href="#">Reference</a></li>
+    <li><a href="#">Visualize Result</a></li>
 </ul>
 <ul class="nav nav-sidebar">
-    <li><a href="#">Webstart Test</a></li>
+    <li><a href="#">Example data set</a> </li>
 </ul>
+
 @stop

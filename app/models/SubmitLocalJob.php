@@ -10,7 +10,7 @@ class SubmitLocalJob {
         $job->status = 'RUNNING';
         $job->save();
 
-        $process = new Process("sh {$data['command_file']}");
+        $process = new Process("/bin/bash {$data['command_file']}");
         $process->run();
 
 

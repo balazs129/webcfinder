@@ -17,6 +17,7 @@
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Publications</a></li>
                 <li><a href="#">Feedback</a></li>
+                <li><a href="#">Reference</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><span class="navbar-text">Signed in as {{ Auth::user()->name }} </span></li>
