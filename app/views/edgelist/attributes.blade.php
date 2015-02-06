@@ -24,7 +24,7 @@
         </div>
         <div class="row">
             <div class="col-md-offset-4 col-md-2 text-center">
-                <p class="text-muted"><b>{{ $edge_list->size }}</b> bytes.</p>
+                <p class="text-muted"><b>{{ $edge_list->size }}</b> bytes</p>
             </div>
             <div class="col-md-2 text-center">
                 <p class="text-muted"><b>{{ $edge_list->nodes }}</b> nodes</p>

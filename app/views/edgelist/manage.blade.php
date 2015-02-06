@@ -22,7 +22,7 @@
                 <td class="vert-align">{{ $file->size }}</td>
                 <td class="vert-align">{{ $file->nodes }}</td>
                 <td class="vert-align">{{ $file->edges }}</td>
-                <td class="vert-align">{{ $file->created_at }}</td>
+                <td class="vert-align text-muted">{{ $file->created_at }}</td>
                 <td>
                     <div class="btn-group" role="group">
                         <a class="btn text-success" href="/upload/edit/{{ $file->id }}">

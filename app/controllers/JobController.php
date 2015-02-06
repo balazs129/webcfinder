@@ -159,19 +159,19 @@ class JobController extends BaseController
         $options = "";
 
         if ($job->upper_weight != 0) {
-            $options = $options . "Upper weight: $job->upper_weight";
+            $options = $options . "Upper weight threshold: $job->upper_weight";
         }
 
         if ($job->lower_weight != 0) {
-            $options = $options . " Lower weight: $job->lower_weight";
+            $options = $options . " Lower weight threshold: $job->lower_weight";
         }
 
         if ($job->digits != 0) {
-            $options = $options . " Digits: $job->digits";
+            $options = $options . " Number of digits: $job->digits";
         }
 
         if ($job->max_time != 0) {
-            $options = $options . " Max time: $job->max_time";
+            $options = $options . " Max time per node: $job->max_time";
         }
 
         if (! is_null($job->directed)) {
@@ -179,7 +179,7 @@ class JobController extends BaseController
         }
 
         if ($job->lower_link != 0) {
-            $options = $options . " Lower link threshold: $job->lower_link";
+            $options = $options . " Lower link weight intensity: $job->lower_link";
         }
 
         if ($job->k_size != 0) {
