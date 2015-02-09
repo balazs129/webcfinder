@@ -39,6 +39,9 @@ Route::get('/job/download/{id}', 'JobController@downloadResult');
 Route::get('/job/cancel/{id}', 'JobController@cancel');
 Route::get('/job/delete/{id}', 'JobController@delete');
 
+// Visualize routes
+Route::get('/visualize', 'Visualize@getData');
+
 // Index page
 Route::get('/', array('before'=>'auth', function()
 {

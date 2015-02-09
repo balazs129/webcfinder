@@ -20,10 +20,10 @@
             @endif
             {{ Form::closeGroup() }}
         </div>
-        <div class="col-sm-offset-3 col-sm-3">
-            {{ Form::openGroup('location', 'Where to send the job') }}
-                {{ Form::radio('local', '1', 'Process locally', true) }}
-                {{ Form::radio('local', '0', 'Send to ELTE Atlasz', false) }}
+        <div class="col-sm-offset-2 col-sm-6">
+            {{ Form::openGroup('location', 'Job Type') }}
+                {{ Form::radio('local', '1', 'TINY - Sparse graph and low edge count', true) }}
+                {{ Form::radio('local', '0', 'HUGE - Dense graph and/or high edge count', false) }}
             {{ Form::closeGroup() }}
         </div>
     </div>

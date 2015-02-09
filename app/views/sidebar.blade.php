@@ -5,11 +5,8 @@
 </ul>
 <ul class="nav nav-sidebar">
     <li><a href="/job/new">Create new job</a></li>
-    <li><a href="/job/update">Update remote jobs</a></li>
     <li><a href="/job/manage">Manage jobs</a></li>
-</ul>
-<ul class="nav nav-sidebar">
-    <li><a href="#">Visualize Result</a></li>
+    <li><a href="/visualize">Visualize Results</a></li>
 </ul>
 <ul class="nav nav-sidebar">
     <li><a href="#">Example data set</a> </li>

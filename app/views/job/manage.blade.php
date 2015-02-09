@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="page-header">
-        <h3>Jobs</h3>
+        <h3>Manage jobs</h3>
     </div>
     <table class="table table-condensed table-hover">
         <thead>
@@ -32,9 +32,9 @@
                     <td class="vert-align text-center text-danger">Failed</td>
                 @endif
                 @if ($job->local == 1)
-                    <td class="vert-align text-center">Local</td>
+                    <td class="vert-align text-center">Tiny</td>
                 @else
-                    <td class="vert-align text-center">Remote</td>
+                    <td class="vert-align text-center">Huge</td>
                 @endif
                 <td class="vert-align">
                     <div class="btn-group" role="group">
