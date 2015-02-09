@@ -216,7 +216,15 @@ class JobController extends BaseController
     public function cancel($id)
     {
         $user_id = Auth::getUser()->id;
-        // Delete local dir if exists
+        $job = Job::find($id);
+
+        if ($job->local == '1') {
+            Queue::push('CancelLocalJob', array('job_id'=>$id));
+        } else {
+            Queue::push('CancelRemoteJob', array('user_id' => $user_id, 'job_id' => $id));
+        }
+
+        // Clean up
         $dir = storage_path() . "/files/$user_id/$id";
         if (File::isDirectory($dir)) {
             File::cleanDirectory($dir);
@@ -226,8 +234,6 @@ class JobController extends BaseController
         // Remove from database
         Job::find($id)->delete();
 
-        // Cancel & delete remote job
-        Queue::push('CancelJob', array('user_id'=>$user_id, 'job_id'=>$id));
         return Redirect::to('/job/manage');
     }
 

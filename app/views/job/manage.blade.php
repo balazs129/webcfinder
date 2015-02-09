@@ -36,7 +36,7 @@
                 @else
                     <td class="vert-align text-center">Huge</td>
                 @endif
-                <td class="vert-align">
+                <td class="vert-align text-center">
                     <div class="btn-group" role="group">
                         @if ($job->status == 'FINISHED')
                         <div class="btn-group">

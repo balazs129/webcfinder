@@ -1,7 +1,6 @@
 <?php
 
-class Visualize extends BaseController
-{
+class Visualize extends BaseController {
     public function __construct()
     {
         $this->beforeFilter('auth');

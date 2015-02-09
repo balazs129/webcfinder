@@ -1,17 +1,17 @@
 <?php
 
-class CancelJob {
-    public function fire($job, $data)
+class CancelRemoteJob {
+    public function fire($queue_job, $data)
     {
-        $remote = SSH::into('Caesar');
+        $remote = SSH::into('Default');
 
         $remote->run(array(
             "cd webcfinder/{$data['user_id']}",
-//            "scancel --account=balazs129 {$data['slurm_id']}",
+            "/usr/local/slurm/bin/scancel --account=balazs129 --name=wcf_{$data['job_id']}",
             "if [ -d {$data['job_id']} ]; then rm -fr {$data['job_id']}"
         ));
 
-        $job->delete();
+        $queue_job->delete();
     }
 }
 
