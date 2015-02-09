@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
 
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/main.min.css" rel="stylesheet">
 
         @yield('head')
     </head>
