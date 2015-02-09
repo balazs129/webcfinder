@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/login.min.css" rel="stylesheet">
     @yield('title')
     </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-md-offset-5">
+            <div class="col-md-2 col-md-offset-5 ">
                 @yield('content')
             </div>
         </div>

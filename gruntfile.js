@@ -25,8 +25,10 @@ module.exports = function (grunt) {
                     sourceMapFilename: 'app/assets/css/bootstrap.css.map',
                     paths: '<%= path %>/less'
                 },
-                src: 'app/assets/css/custombootstrap.less',
-                dest: 'app/assets/css/bootstrap.css'
+                files: {
+                    "app/assets/css/main.css": "app/assets/css/main.less",
+                    "app/assets/css/login.css": "app/assets/css/login.less"
+                }
             }
         },
 
@@ -38,7 +40,7 @@ module.exports = function (grunt) {
                 options: {
                     map: true
                 },
-                src: 'app/assets/css/bootstrap.css'
+                src: 'app/assets/css/main.css'
             }
         },
 
@@ -48,10 +50,15 @@ module.exports = function (grunt) {
                 keepSpecialComments: '*',
                 noAdvanced: true
             },
-            minifyCore: {
-                src: 'app/assets/css/bootstrap.css',
-                dest: 'public/css/bootstrap.min.css'
+            main: {
+                src: 'app/assets/css/main.css',
+                dest: 'public/css/main.min.css'
+            },
+            login: {
+                src: 'app/assets/css/login.css',
+                dest: 'public/css/login.min.css'
             }
+
         },
 
         usebanner: {
@@ -86,9 +93,13 @@ module.exports = function (grunt) {
         },
 
         watch: {
-            files: ['app/assets/css/custombootstrap.less'],
+            files: [
+                'app/assets/css/main.less',
+                'app/assets/css/login.less'
+                ],
             tasks: ['dist-css']
         }
+
     });
 
     grunt.loadNpmTasks('grunt-autoprefixer');
