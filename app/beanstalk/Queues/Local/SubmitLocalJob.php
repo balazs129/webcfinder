@@ -23,16 +23,15 @@ class SubmitLocalJob {
 
             // Create tarball and move to the result dir
             $tar_chd = storage_path() . "/files/{$data['user_id']}/{$data['job_id']}";
-            $tar_command = "tar -czf {$result_dir}/wcf_{$data['job_id']}.tar.gz "
-            . "-C $tar_chd results";
+            $tar_command = "tar -czf {$result_dir}/wcf_{$data['job_id']}.tar.gz"
+            . " -C $tar_chd results";
 
             $tar_process = new Process($tar_command);
             $tar_process->run();
 
-            if ($tar_process->isSuccessful()) {
-                $to_rm = storage_path() . "/files/{$data['user_id']}/{$data['job_id']}";
-                \File::deleteDirectory($to_rm);
-            }
+            $user = \User::find($data['user_id']);
+            $result_disk_usage = \File::size("{$result_dir}/wcf_{$data['job_id']}.tar.gz");
+            $user->increment('disk_usage', $result_disk_usage);
 
             $job->status = 'FINISHED';
             $job->save();
@@ -40,6 +39,10 @@ class SubmitLocalJob {
             $job->status = 'FAILED';
             $job->save();
         }
+
+        // Clean up
+        $to_rm = storage_path() . "/files/{$data['user_id']}/{$data['job_id']}";
+        \File::deleteDirectory($to_rm);
 
         $queue_job->delete();
     }

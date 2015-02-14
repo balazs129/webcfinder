@@ -7,7 +7,7 @@ class CancelLocalJob {
     {
         // Kill the process
         $process = new Process("kill -9 $(pgrep wcf_{$data['job_id']}");
-        $process->run;
+        $process->run();
 
         $queue_job->delete();
     }

@@ -70,8 +70,14 @@
         @endforeach
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary btn-sm">
-        <span class="glyphicon glyphicon-refresh"></span>
-        Update huge jobs
-    </button>
+    <div class="page-header"></div>
+    <div class="row">
+        <div class="col-sm-offset-6 col-sm-2">
+            <button type="button" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-refresh"></span>
+                Update huge jobs
+            </button>
+        </div>
+    </div>
+
 @stop

@@ -50,7 +50,7 @@ class EdgeController extends BaseController {
 
             $other_edge_lists = EdgeList::where('user_id', '=', $user->id)->get(array('name'))->toArray();
 
-            // Create an associative array fo select
+            // Create an associative array for select
             $select_options = array();
             foreach (array_flatten($other_edge_lists) as $e_list) {
                 $select_options[$e_list] = $e_list;
@@ -68,6 +68,9 @@ class EdgeController extends BaseController {
                 $edge_list->nodes = $out[0];
                 $edge_list->edges = $out[1];
                 $edge_list->save();
+
+                $db_user = User::find($user->id);
+                $db_user->increment('disk_usage', $edge_list->size, array('active'=>false));
 
                 return Redirect::to('/job/new')->with('uploaded', $edge_list->name)
                     ->with('edge_list', $select_options);
