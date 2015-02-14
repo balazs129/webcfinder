@@ -1,9 +1,9 @@
-<?php
+<?php namespace Queues\Remote;
 
 class CancelRemoteJob {
     public function fire($queue_job, $data)
     {
-        $remote = SSH::into('Default');
+        $remote = \SSH::into('Default');
 
         $remote->run(array(
             "cd webcfinder/{$data['user_id']}",

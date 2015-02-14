@@ -63,12 +63,18 @@
             {{ Form::closeGroup() }}
         </div>
     </div>
-
+    <div class="page-header"></div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-offset-5 col-sm-4">
             <div class="form-actions">
-                <button type="submit" class="btn btn-sm btn-primary">Submit Job</button>
-                <a class="btn btn-default btn-sm" href="/">Cancel</a>
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Submit Job
+                </button>
+                <a class="btn btn-default btn-sm" href="/">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cancel
+                </a>
             </div>
         </div>
     </div>

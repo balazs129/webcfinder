@@ -19,7 +19,7 @@
                 <td class="vert-align">{{ $job->edge_list}}</td>
                 <td class="vert-align text-center text-muted">{{ $job->cfinder_options }}</td>
                 <td class="vert-align text-center">
-                    <a type="button" class="btn btn-danger btn-xs" href="/visualize/{{ $job->id }}">
+                    <a type="button" class="btn btn-danger btn-xs" href="#">
                         Visualize
                     </a>
                 </td>

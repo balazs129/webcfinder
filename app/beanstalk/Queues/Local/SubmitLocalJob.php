@@ -1,11 +1,11 @@
-<?php
+<?php namespace Queues\Local;
 
 use Symfony\Component\Process\Process;
 
 class SubmitLocalJob {
     public function fire($queue_job, $data)
     {
-        $job = Job::find($data['job_id']);
+        $job = \Job::find($data['job_id']);
 
         $job->status = 'RUNNING';
         $job->save();
@@ -17,8 +17,8 @@ class SubmitLocalJob {
         if ($process->isSuccessful()) {
             $result_dir = storage_path() . "/files/{$data['user_id']}/results";
 
-            if (! File::isDirectory($result_dir)) {
-                File::makeDirectory($result_dir);
+            if (! \File::isDirectory($result_dir)) {
+                \File::makeDirectory($result_dir);
             }
 
             // Create tarball and move to the result dir
@@ -31,7 +31,7 @@ class SubmitLocalJob {
 
             if ($tar_process->isSuccessful()) {
                 $to_rm = storage_path() . "/files/{$data['user_id']}/{$data['job_id']}";
-                File::deleteDirectory($to_rm);
+                \File::deleteDirectory($to_rm);
             }
 
             $job->status = 'FINISHED';

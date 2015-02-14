@@ -54,7 +54,6 @@ class LoginController extends BaseController {
             $user->email          = Input::get('email');
             $user->organization   = Input::get('organization');
             $user->password       = Hash::make(Input::get('password'));
-            $user->admin          = 0;
 
             $user->save();
 

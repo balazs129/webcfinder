@@ -10,7 +10,6 @@ class UserTableSeeder extends Seeder {
             'email' => 'test@gmail.com',
             'organization' => 'Test Organization',
             'password' => Hash::make('rpw'),
-            'admin' => 0,
         ));
     }
 }

@@ -1,9 +1,9 @@
-<?php
+<?php namespace Queues\Remote;
 
-class UpdateJob {
+class UpdateRemoteJob {
     public function fire($queue_job, $data)
     {
-        $remote = SSH::into('Default');
+        $remote = \SSH::into('Default');
 
         $ret_val = '';
         $remote->run(array(
@@ -19,7 +19,7 @@ class UpdateJob {
 
             foreach ($finished_jobs as $tmp_finished) {
                 $finished = str_replace("\n", "", $tmp_finished);
-                $job = Job::find($finished);
+                $job = \Job::find($finished);
                 $job->status = "UPDATING";
                 $job->save();
             }
@@ -31,12 +31,12 @@ class UpdateJob {
                 $remote->get($remote_path, $local_path);
 
                 // If we got the result file
-                if (File::exists($local_path)) {
+                if (\File::exists($local_path)) {
                     // Remove remote file
                     $remote->run("rm $remote_path");
 
                     // Update the job record
-                    $job = Job::find($finished);
+                    $job = \Job::find($finished);
                     $job->status = "FINISHED";
                     $job->save();
                 }

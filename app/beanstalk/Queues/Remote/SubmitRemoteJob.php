@@ -1,11 +1,11 @@
-<?php
+<?php namespace Queues\Remote;
 
 class SubmitRemoteJob
 {
     public function fire($queue_job, $data)
     {
-        $remote = SSH::into('Default');
-        $job = Job::find($data['job_id']);
+        $remote = \SSH::into('Default');
+        $job = \Job::find($data['job_id']);
 
         // Upload and run the job file
         $remote->run(array(
@@ -31,8 +31,8 @@ class SubmitRemoteJob
 
         // Delete the local job dir
         $working_dir = storage_path() . "/files/{$data['user_id']}" . "/{$data['job_id']}";
-        if (File::isDirectory($working_dir)) {
-            File::deleteDirectory($working_dir);
+        if (\File::isDirectory($working_dir)) {
+            \File::deleteDirectory($working_dir);
         }
 
         $queue_job->delete();

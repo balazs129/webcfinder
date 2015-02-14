@@ -13,10 +13,14 @@
 
     "require-dev": {
         "phpunit/phpunit": "4.3.*",
-	  	"barryvdh/laravel-ide-helper": "~1.11@dev"
+	  	"barryvdh/laravel-ide-helper": "~1.11@dev",
+	  	"phpmd/phpmd" : "@stable"
     },
 
 	"autoload": {
+        "psr-0": {
+          "Queues": "app/beanstalk/"
+        },
 		"classmap": [
 			"app/commands",
 			"app/controllers",

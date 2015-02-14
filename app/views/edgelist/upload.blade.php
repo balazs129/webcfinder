@@ -37,10 +37,15 @@
             </div>
         </div>
     <div class="row">
-        <div class="col-md-offset-5 col-md-3 text-center">
+        <div class="col-md-offset-5 col-md-4 text-center">
             <div class="form-actions">
-                <button type="submit" class="btn btn-sm btn-primary">Upload</button>
-                <a class="btn btn-default btn-sm" href="/">Cancel</a>
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <span class="glyphicon glyphicon-upload"></span>
+                    Upload
+                </button>
+                <a class="btn btn-default btn-sm" href="/">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Cancel</a>
             </div>
             {{ Form::close() }}
         </div>

@@ -1,9 +1,8 @@
-<?php
+<?php namespace Queues\Local;
 
 use Symfony\Component\Process\Process;
 
 class CancelLocalJob {
-
     public function fire($queue_job, $data)
     {
         // Kill the process

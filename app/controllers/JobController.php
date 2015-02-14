@@ -118,14 +118,14 @@ class JobController extends BaseController
             $command_file = $this->generateJobFile($job_options);
 
             if ($job->local) {
-                Queue::push('SubmitLocalJob', array(
+                Queue::push('Queues\Local\SubmitLocalJob', array(
                     'user_id' => $user_id,
                     'job_id' => $job->id,
                     'command_file' => $command_file
                     )
                 );
             } else {
-                Queue::push('SubmitRemoteJob', array (
+                Queue::push('Queues\Remote\SubmitRemoteJob', array (
                     'user_id' => $user_id,
                     'job_id' => $job->id,
                     'local_file' => $command_file
@@ -133,28 +133,27 @@ class JobController extends BaseController
                 );
             }
             return Redirect::to('/job/manage');
-//            return View::make('job.test')->with('data', Input::all());
         }
     }
 
-    public function getUpdate()
-    {
-        $user_id = Auth::getUser()->id;
-        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'RUNNING')->count();
-
-        return View::make('job.update')->with('pending_jobs', $pending_jobs);
-    }
+//    public function getUpdate()
+//    {
+//        $user_id = Auth::getUser()->id;
+//        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'RUNNING')->count();
+//
+//        return View::make('job.update')->with('pending_jobs', $pending_jobs);
+//    }
 
     public function update()
     {
         $user_id = Auth::getUser()->id;
 
-        Queue::push('UpdateJob', array('user_id'=>$user_id));
+        Queue::push('Queues\Remote\UpdateRemoteJob', array('user_id'=>$user_id));
 
         return Redirect::to('/job/manage');
     }
 
-    private function getCfinderOptions($job)
+    private static function getCfinderOptions($job)
     {
         $options = "";
 
@@ -200,7 +199,7 @@ class JobController extends BaseController
 
         $jobs->each(function($job){
           $job->edge_list = EdgeList::find($job->edge_list_id)->name;
-          $job->cfinder_options = $this->getCfinderOptions($job);
+          $job->cfinder_options = JobController::getCfinderOptions($job);
         });
 
         return View::make('job.manage')->with('jobs', $jobs);

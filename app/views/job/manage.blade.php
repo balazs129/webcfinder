@@ -3,6 +3,7 @@
 @include('sidebar')
 
 @section('content')
+
     <div class="page-header">
         <h3>Manage jobs</h3>
     </div>
@@ -69,4 +70,8 @@
         @endforeach
         </tbody>
     </table>
+    <button type="button" class="btn btn-primary btn-sm">
+        <span class="glyphicon glyphicon-refresh"></span>
+        Update huge jobs
+    </button>
 @stop
