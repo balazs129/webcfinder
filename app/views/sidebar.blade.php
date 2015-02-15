@@ -1,6 +1,6 @@
 @section('sidebar-content')
 <ul class="nav nav-sidebar">
-    <li><a href="/upload">Upload new edge list</a></li>
+    <li><a class="side-menu" href="/upload">Upload new edge list</a></li>
     <li><a href="/files">Manage edge lists</a></li>
 </ul>
 <ul class="nav nav-sidebar">

@@ -8,14 +8,31 @@
 
     <link href="css/login.min.css" rel="stylesheet">
     @yield('title')
-    </head>
+</head>
 <body>
-    <div class="container-fluid">
+    <div class="jumbotron">
+        <div class="text-center banner">
+            <img src="/img/banner3.gif">
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="page-header text-center">
+            <h2>CFinder on the web</h2>
+        </div>
+    </div>
+    <div class="jumbotron"
+    <div class="container">
         <div class="row">
-            <div class="col-md-2 col-md-offset-5 ">
+            <div class="col-md-4 col-md-offset-4">
                 @yield('content')
             </div>
         </div>
+    </div>
+    <div class="jumbotron">
+        <div class="page-header text-center"></div>
+    </div>
+    <div class="jumbotron text-center">
+        <p>&copy 2015 <a href="#">ELTE, Dept. of Biol. Phys.</a></p>
     </div>
 </body>
 </html>

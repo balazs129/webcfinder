@@ -57,13 +57,14 @@
 @brand-danger:          #d9534f;
 
 //== Scaffolding
-@link-color: darken(@brand-primary, 5%);
+@link-color: darken(@brand-primary, 20%);
 @link-hover-decoration: none;
 @link-hover-color: darken(@link-color, 20%);
 
+@text-color: @gray-base;
 //== Typography
-@font-size-base:                   13px;
-@headings-color: darken(#d2ae82, 10%);
+@font-size-base:                   14px;
+@headings-color: darken(#d2ae82, 50%);
 @headings-small-color: darken(@headings-color, 15%);
 
 //== Buttons
@@ -99,7 +100,7 @@
 @input-color-placeholder: @gray-light;
 @input-color: @gray-base;
 @input-border: lighten(@headings-color, 20%);
-@input-border-focus: darken(@headings-color, 5%);
+@input-border-focus: lighten(#476eff, 5%);
 @input-border-radius:      0;
 
 
@@ -146,3 +147,9 @@
 @alert-danger-border:         @state-danger-border;
 
 @page-header-border-color: #ddb988;
+
+@body-bg: #8C6434;
+
+.banner {
+  padding-top: 50px;
+}

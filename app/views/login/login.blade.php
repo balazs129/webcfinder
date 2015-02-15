@@ -5,25 +5,29 @@
 @stop
 
 @section('content')
-    <div class="page-header text-center">
-        <h3>Webcfinder <small>login</small></h3>
-    </div>
-        {{ Form::open() }}
+
+        {{ Form::open(array('class' => 'form-horizontal')) }}
             {{ Form::openGroup('login-email', '') }}
-            {{ Form::text('email', '', array('class' => 'input-sm', 'placeholder' => 'Email address')) }}
+            {{ Form::label('email', 'Email', array('class' => 'control-label col-xs-2')) }}
+            <div class="col-xs-offset-1 col-xs-8">
+                {{ Form::email('email', '', array('class' => 'input-sm', 'placeholder' => 'Email address')) }}
+            </div>
             {{ Form::closeGroup() }}
             {{ Form::openGroup('login-password', '') }}
-            {{ Form::password('password', array('class'=>'input-sm', 'placeholder' => 'password')) }}
+            {{ Form::label('password', 'Password', array('class' => 'control-label col-xs-2')) }}
+            <div class="col-xs-offset-1 col-xs-8">
+                {{ Form::password('password', array('class'=>'input-sm', 'placeholder' => 'Password')) }}
+            </div>
             {{ Form::closeGroup() }}
         {{ Form::openGroup('links') }}
             <ul class="text-center list-inline">
-                <li class="disabled"> <ahref="/register">Register</a></li>
+                <li> <a href="#">Register</a></li>
                 <li> <a href="/reminder">Forgotten Password</a></li>
             </ul>
         {{ Form::closeGroup() }}
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                {{ Form::submit('Login', array('class' => 'btn btn-sm btn-block btn-success')) }}
+                <div class="col-md-6 col-md-offset-3">
+                {{ Form::submit('Login', array('class' => 'btn btn-sm btn-block btn-primary')) }}
                 </div>
             </div>
         {{ Form::close() }}

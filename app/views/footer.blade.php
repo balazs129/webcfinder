@@ -1,5 +1,5 @@
 <footer class="footer">
     <div class="container">
-        <p class="text-muted text-center">Webcfinder alpha v0.4.5</p>
+        <p class="text-center">Webcfinder v0.4.6alpha</p>
     </div>
 </footer>

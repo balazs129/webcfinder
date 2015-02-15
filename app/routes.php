@@ -16,8 +16,9 @@ Route::pattern('id', '[0-9]+');
 // Login routes
 Route::get('login', 'LoginController@showLogin');
 Route::post('login', 'LoginController@getLogin');
-Route::get('register', 'LoginController@showRegistration');
-Route::post('register', 'LoginController@setRegistration');
+// No registration yet
+//Route::get('register', 'LoginController@showRegistration');
+//Route::post('register', 'LoginController@setRegistration');
 Route::get('logout', 'LoginController@logOut');
 Route::get('reminder', 'LoginController@getReminder');
 
