@@ -40,7 +40,7 @@ class JobController extends BaseController
         } else {
             # Atlasz slurm file
             $file_content = "#!/bin/bash\n"
-                . 'srun $HOME/webcfinder/CFinder_commandline64 '
+                . '/usr/local/slurm/bin/srun $HOME/webcfinder/CFinder_commandline64 '
                 . "{$job_options['cmd_options']}";
 //                . "> /dev/null 2>&1";
         }

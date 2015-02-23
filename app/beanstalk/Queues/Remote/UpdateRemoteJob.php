@@ -19,13 +19,11 @@ class UpdateRemoteJob {
 
             foreach ($finished_jobs as $tmp_finished) {
                 $finished = str_replace("\n", "", $tmp_finished);
+
                 $job = \Job::find($finished);
                 $job->status = "UPDATING";
                 $job->save();
-            }
 
-            foreach ($finished_jobs as $tmp_finished) {
-                $finished = str_replace("\n", "", $tmp_finished);
                 $remote_path = "webcfinder/{$data['user_id']}/result_$finished.tar.gz";
                 $local_path = storage_path() . "/files/{$data['user_id']}/results/job_$finished.tar.gz";
                 $remote->get($remote_path, $local_path);
