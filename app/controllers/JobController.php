@@ -218,9 +218,9 @@ class JobController extends BaseController
         $job = Job::find($id);
 
         if ($job->local == '1') {
-            Queue::push('CancelLocalJob', array('job_id'=>$id));
+            Queue::push('Queues\Local\CancelLocalJob', array('job_id'=>$id));
         } else {
-            Queue::push('CancelRemoteJob', array('user_id' => $user_id, 'job_id' => $id));
+            Queue::push('Queues\Remote\CancelRemoteJob', array('user_id' => $user_id, 'job_id' => $id));
         }
 
         // Clean up
