@@ -6,9 +6,9 @@ class CancelRemoteJob {
         $remote = \SSH::into('Default');
 
         $remote->run(array(
+            "/usr/local/slurm/bin/scancel --user=balazs129 --name=wcf_{$data['job_id']}.sh",
             "cd webcfinder/{$data['user_id']}",
-            "/usr/local/slurm/bin/scancel --account=balazs129 --name=wcf_{$data['job_id']}",
-            "if [ -d {$data['job_id']} ]; then rm -fr {$data['job_id']}"
+            "if [ -d {$data['job_id']} ]; then rm -fr {$data['job_id']}; fi"
         ));
 
         $queue_job->delete();
