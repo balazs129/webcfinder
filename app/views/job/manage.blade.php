@@ -73,7 +73,7 @@
     <div class="page-header"></div>
     <div class="row">
         <div class="col-sm-offset-6 col-sm-2">
-            <a type="button" class="btn btn-primary btn-sm" href="#">
+            <a type="button" class="btn btn-primary btn-sm" href="/job/update">
                 <span class="glyphicon glyphicon-refresh"></span>
                 Update huge jobs
             </a>

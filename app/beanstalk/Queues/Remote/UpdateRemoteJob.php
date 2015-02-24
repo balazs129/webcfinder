@@ -19,8 +19,8 @@ class UpdateRemoteJob {
 
             foreach ($updated_jobs as $remote_job) {
                 $job_parts = explode(":", $remote_job);
-                $job_id = $job_parts[0];
-                $job_status = $job_parts[1];
+                $job_id = str_replace("\n", "", $job_parts[0]);
+                $job_status = str_replace("\n", "", $job_parts[1]);
 
                 $job = \Job::find($job_id);
                 if ($job_status == "FAILED") {

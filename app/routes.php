@@ -33,8 +33,7 @@ Route::get('files', 'EdgeController@manageFiles');
 // Job routes
 Route::get('/job/new', 'JobController@create');
 Route::post('/job/new', 'JobController@submit');
-Route::get('/job/update', 'JobController@getUpdate');
-Route::post('/job/update', 'JobController@update');
+Route::get('/job/update', 'JobController@Update');
 Route::get('/job/manage', 'JobController@manage');
 Route::get('/job/download/{id}', 'JobController@downloadResult');
 Route::get('/job/cancel/{id}', 'JobController@cancel');
