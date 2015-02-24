@@ -40,7 +40,9 @@ class JobController extends BaseController
         } else {
             # Atlasz slurm file
             $file_content = "#!/bin/bash\n"
-                . '/usr/local/slurm/bin/srun $HOME/webcfinder/CFinder_commandline64 '
+                . '/usr/local/slurm/bin/srun '
+                . '$HOME/webcfinder/CFinder_commandline64 '
+                . '-l $HOME/webcfinder/licence.txt'
                 . "{$job_options['cmd_options']}";
 //                . "> /dev/null 2>&1";
         }
@@ -135,14 +137,6 @@ class JobController extends BaseController
             return Redirect::to('/job/manage');
         }
     }
-
-//    public function getUpdate()
-//    {
-//        $user_id = Auth::getUser()->id;
-//        $pending_jobs = Job::where('user_id', '=', $user_id)->where('status', '=', 'RUNNING')->count();
-//
-//        return View::make('job.update')->with('pending_jobs', $pending_jobs);
-//    }
 
     public function update()
     {
