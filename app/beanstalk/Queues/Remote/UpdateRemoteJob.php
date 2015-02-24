@@ -44,14 +44,18 @@ class UpdateRemoteJob {
 
     private static function finished_job($job, $remote, $user_id)
     {
-        $remote_path = "webcfinder/$user_id/$job->id/result_$job->id.tar.gz";
+        $remote_path = "webcfinder/$user_id/result_$job->id.tar.gz";
         $local_path = storage_path() . "/files/$user_id/results/job_$job->id.tar.gz";
         $remote->get($remote_path, $local_path);
 
         // If we got the result file
         if (\File::exists($local_path)) {
             // Remove remote file
-            $remote->run("rm -fr webcfinder/$user_id/$job->id");
+            $remote->run(array(
+                "rm -fr webcfinder/$user_id/$job->id",
+                "rm $remote_path"
+                )
+            );
 
             // Update the job record
             $job->status = "FINISHED";
