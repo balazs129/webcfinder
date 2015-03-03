@@ -30,6 +30,7 @@
         </div>
         @include('footer')
     <script src="/js/webcfinder.min.js"></script>
+    @yield('script')
     </body>
 </html>
  

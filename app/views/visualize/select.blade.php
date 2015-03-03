@@ -19,13 +19,17 @@
                 <td class="vert-align">{{ $job->edge_list}}</td>
                 <td class="vert-align text-center text-muted">{{ $job->cfinder_options }}</td>
                 <td class="vert-align text-center">
-                    <a type="button" class="btn btn-danger btn-xs" href="#">
+                    <button class="btn btn-danger btn-visualize btn-xs" id="{{$job->id}}">
                         Visualize
-                    </a>
+                    </button>
                 </td>
                 <td class="vert-align text-muted text-center">{{ $job->created_at }}</td>
             </tr>
         @endforeach
         </tbody>
     </table>
+@stop
+
+@section('script')
+    <script src="/js/vstart.js"></script>
 @stop
