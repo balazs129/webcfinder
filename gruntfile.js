@@ -69,7 +69,8 @@ module.exports = function(grunt) {
         watch: {
             files: [
                 'app/assets/css/main.less',
-                'app/assets/css/login.less'
+                'app/assets/css/login.less',
+                'app/assets/css/visualize.less'
             ],
             tasks: ['dist-css']
         }

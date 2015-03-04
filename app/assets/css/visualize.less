@@ -13,15 +13,15 @@
 @import "code.less";
 @import "grid.less";
 //@import "tables.less";
-@import "forms.less";
+//@import "forms.less";
 @import "buttons.less";
 
 // Components
 //@import "component-animations.less";
 //@import "dropdowns.less";
-//@import "button-groups.less";
-@import "input-groups.less";
-@import "navs.less";
+@import "button-groups.less";
+//@import "input-groups.less";
+//@import "navs.less";
 //@import "navbar.less";
 //@import "breadcrumbs.less";
 //@import "pagination.less";
@@ -30,14 +30,14 @@
 //@import "badges.less";
 //@import "jumbotron.less";
 //@import "thumbnails.less";
-@import "alerts.less";
+//@import "alerts.less";
 //@import "progress-bars.less";
 @import "media.less";
 //@import "list-group.less";
 //@import "panels.less";
 //@import "responsive-embed.less";
 //@import "wells.less";
-@import "close.less";
+//@import "close.less";
 
 // Components w/ JavaScript
 //@import "modals.less";
@@ -49,107 +49,45 @@
 @import "utilities.less";
 @import "responsive-utilities.less";
 
-//== Colors
-@brand-primary:         darken(#428bca, 6.5%); // #337ab7
-@brand-success:         #5cb85c;
-@brand-info:            #5bc0de;
-@brand-warning:         #f0ad4e;
-@brand-danger:          #d9534f;
+html, body {
+  text-align: center;
+  height: 100%;
+}
 
-//== Scaffolding
-@link-color: darken(@brand-primary, 20%);
-@link-hover-decoration: none;
-@link-hover-color: darken(@link-color, 20%);
+.max-height {
+  height: 100%;
+  min-height: 100%;
+}
 
-@text-color: @gray-base;
-//== Typography
-@font-size-base:                   14px;
-@headings-color: darken(#d2ae82, 50%);
-@headings-small-color: darken(@headings-color, 15%);
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
 
-//== Buttons
-@btn-font-weight:                normal;
+.control-panel {
+  padding-top: 20px;
+}
 
-@btn-default-color: @gray-light;
-@btn-default-bg:                 @body-bg;
-@btn-default-border:             lighten(@gray-light, 10%);
+.data-container {
+  height: 400px;
+  overflow-y: auto;
+  padding: 0;
+  margin-top: 10px;
+}
 
-@btn-primary-color: @gray-dark;
-@btn-primary-bg:                 #F8AC59;
-@btn-primary-border:             darken(@btn-primary-bg, 10%);
+.data-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+}
 
-@btn-success-color:              #fff;
-@btn-success-bg:                 darken(@brand-success, 25%);
-@btn-success-border:             darken(@btn-success-bg, 5%);
+.data-container li:hover {
+  background: #aeaeae;
+}
 
-@btn-info-color:                 #fff;
-@btn-info-bg:                    @brand-info;
-@btn-info-border:                darken(@btn-info-bg, 5%);
-
-@btn-warning-color:              #fff;
-@btn-warning-bg:                 @brand-warning;
-@btn-warning-border:             darken(@btn-warning-bg, 5%);
-
-@btn-danger-color:               #fff;
-@btn-danger-bg:                  @brand-danger;
-@btn-danger-border:              darken(@btn-danger-bg, 5%);
-
-@btn-link-disabled-color:        @gray-light;
-
-//== Forms
-@input-color-placeholder: @gray-light;
-@input-color: @gray-base;
-@input-border: lighten(@headings-color, 20%);
-@input-border-focus: lighten(#476eff, 5%);
-@input-border-radius:      0;
-
-
-//== Grid system
-@grid-columns:              12;
-@grid-gutter-width:         10px;
-
-//== Form states and alerts
-@state-success-text: #5fb260;
-@state-success-bg:               #dff0d8;
-@state-success-border:           darken(spin(@state-success-bg, -10), 5%);
-
-@state-info-text: #3784a7;
-@state-info-bg:                  #d9edf7;
-@state-info-border:              darken(spin(@state-info-bg, -10), 7%);
-
-@state-warning-text: #97793e;
-@state-warning-bg:               #fcf8e3;
-@state-warning-border:           darken(spin(@state-warning-bg, -10), 5%);
-
-@state-danger-text: #c63946;
-@state-danger-bg:                #f2dede;
-@state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
-
-//== Alerts
-@alert-padding:               15px;
-@alert-border-radius:         @border-radius-base;
-@alert-link-font-weight:      bold;
-
-@alert-success-bg:            @state-success-bg;
-@alert-success-text:          @state-success-text;
-@alert-success-border:        @state-success-border;
-
-@alert-info-bg:               @state-info-bg;
-@alert-info-text:             @state-info-text;
-@alert-info-border:           @state-info-border;
-
-@alert-warning-bg:            @state-warning-bg;
-@alert-warning-text:          @state-warning-text;
-@alert-warning-border:        @state-warning-border;
-
-@alert-danger-bg:             @state-danger-bg;
-@alert-danger-text:           @state-danger-text;
-@alert-danger-border:         @state-danger-border;
-
-@page-header-border-color: #ddb988;
-
-@body-bg: #8C6434;
-
-.banner {
-  padding-top: 50px;
+.visualization {
+  border: solid 1px #C4C2C2;
+  width: 100%;
+  min-height: 95%;
 }

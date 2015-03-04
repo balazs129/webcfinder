@@ -58,6 +58,6 @@ class Visualize extends BaseController {
     }
 
     public function showWindow(){
-        return 'Teszt';
+        return View::make('visualize.main');
     }
 }
