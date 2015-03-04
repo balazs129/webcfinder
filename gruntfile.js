@@ -1,73 +1,40 @@
-module.exports = function (grunt) {
-    var configBridge = grunt.file.readJSON('./bower_components/bootstrap/grunt/configBridge.json', {encoding: 'utf8'});
+module.exports = function(grunt) {
+    "use strict";
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('bower_components/bootstrap/package.json'),
         path: 'bower_components/bootstrap',
-        banner: '/*!\n' +
-        ' * Bootstrap v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-        ' * Copyright 2011-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-        ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
-        ' */\n',
 
         clean: {
-            css: ['app/assets/css/*.css', 'app/assets/css/*.map', '!app/assets/css/*.less'],
-            js: ['app/assets/js', 'public/js']
+            css: ['app/assets/css/*', 'public/css/*', '!app/assets/css/*.less'],
+            js: ['app/assets/js/*.min.js']
         },
 
         less: {
-            compileCore: {
-                options: {
-                    strictMath: true,
-                    sourceMap: true,
-                    outputSourceFiles: true,
-                    sourceMapURL: 'bootstrap.css.map',
-                    sourceMapFilename: 'app/assets/css/bootstrap.css.map',
-                    paths: '<%= path %>/less'
-                },
+            options: {
+                strictMath: true,
+                strictUnits: true,
+                compress: true,
+                paths: '<%= path %>/less'
+            },
+
+            all: {
                 files: {
                     "app/assets/css/main.css": "app/assets/css/main.less",
-                    "app/assets/css/login.css": "app/assets/css/login.less"
+                    "app/assets/css/login.css": "app/assets/css/login.less",
+                    "app/assets/css/visualize.css": "app/assets/css/visualize.less"
                 }
             }
         },
 
-        autoprefixer: {
-            options: {
-                browsers: configBridge.config.autoprefixerBrowsers
-            },
-            core: {
-                options: {
-                    map: true
-                },
-                src: 'app/assets/css/main.css'
-            }
-        },
-
         cssmin: {
-            options: {
-                compatibility: 'ie8',
-                keepSpecialComments: '*',
-                noAdvanced: true
-            },
-            main: {
-                src: 'app/assets/css/main.css',
-                dest: 'public/css/main.min.css'
-            },
-            login: {
-                src: 'app/assets/css/login.css',
-                dest: 'public/css/login.min.css'
-            }
-
-        },
-
-        usebanner: {
-            options: {
-                position: 'top',
-                banner: '<%= banner %>'
-            },
-            files: {
-                src: 'public/css/*.css'
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'app/assets/css',
+                    src: ['*.css', '!*.min.css'],
+                    dest: 'public/css',
+                    ext: '.min.css'
+                }]
             }
         },
 
@@ -80,14 +47,21 @@ module.exports = function (grunt) {
                     'bower_components/jquery/dist/jquery.js',
                     'bower_components/bootstrap/dist/js/bootstrap.js'
                 ],
+                // TODO: Select only necessary
                 dest: 'app/assets/js/webcfinder.js'
             }
         },
 
         uglify: {
+            options: {
+                compress: true,
+                screwIE8: true
+            },
+
             all: {
                 files: {
-                    'public/js/webcfinder.min.js': ['app/assets/js/webcfinder.js']
+                    'public/js/webcfinder.min.js': ['app/assets/js/webcfinder.js'],
+                    'public/js/vstart.min.js': ['app/assets/js/vstart.js']
                 }
             }
         },
@@ -96,7 +70,7 @@ module.exports = function (grunt) {
             files: [
                 'app/assets/css/main.less',
                 'app/assets/css/login.less'
-                ],
+            ],
             tasks: ['dist-css']
         }
 
@@ -114,8 +88,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // CSS distribution task
-    grunt.registerTask('dist-css', ['clean:css', 'less:compileCore', 'autoprefixer', 'usebanner', 'cssmin']);
+    grunt.registerTask('dist-css', ['clean:css', 'less:all', 'cssmin']);
 
     // JS distribution task
-    grunt.registerTask('dist-js', ['clean:js', 'concat:release', 'uglify:all'])
+    grunt.registerTask('dist-js', ['clean:js', 'concat:release', 'uglify:all']);
+
+    grunt.registerTask('default', ['dist-css', 'dist-js']);
 };

@@ -41,6 +41,7 @@ Route::get('/job/delete/{id}', 'JobController@delete');
 
 // Visualize routes
 Route::get('/visualize', 'Visualize@getData');
+Route::get('/visualize/{id}', 'Visualize@showWindow');
 
 // Index page
 Route::get('/', array('before'=>'auth', function()

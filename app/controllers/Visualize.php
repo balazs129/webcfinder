@@ -6,7 +6,7 @@ class Visualize extends BaseController {
         $this->beforeFilter('auth');
     }
 
-    private function getCfinderOptions($job)
+    private static function getCfinderOptions($job)
     {
         $options = "";
 
@@ -55,5 +55,9 @@ class Visualize extends BaseController {
         });
 
         return View::make('visualize.select')->with('jobs', $jobs);
+    }
+
+    public function showWindow(){
+        return 'Teszt';
     }
 }

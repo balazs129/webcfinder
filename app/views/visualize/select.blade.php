@@ -31,5 +31,5 @@
 @stop
 
 @section('script')
-    <script src="/js/vstart.js"></script>
+    <script src="/js/vstart.min.js"></script>
 @stop

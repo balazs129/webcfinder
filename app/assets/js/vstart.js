@@ -5,10 +5,10 @@ window.onload = function () {
         btnArray = [].slice.call(btnCollection);
 
     var btnClick = function (e) {
-       var jobID = e.target.id,
-           url = "/visualize/" + jobID;
+        var jobID = e.target.id,
+            url = "/visualize/" + jobID;
 
-       var visWindow = window.open(url, "Visualization", "width=800, height=600");
+        var visWindow = window.open(url, "Visualization", "width=800, height=600");
 
         if (visWindow) {
             visWindow.focus();
